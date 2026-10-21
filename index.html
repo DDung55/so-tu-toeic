@@ -1,0 +1,1008 @@
+<!doctype html><html lang="vi"><head><meta charset=utf8><title>Sổ từ vựng TOEIC</title><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 rx=%2216%22 fill=%22%233e7b3a%22/%3E%3Ctext x=%2232%22 y=%2244%22 font-size=%2236%22 font-family=%22Arial%22 font-weight=%22700%22 fill=%22white%22 text-anchor=%22middle%22%3ET%3C/text%3E%3C/svg%3E"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Lexend:wght@500;600;700&family=Noto+Sans:wght@400&display=swap">
+<style>
+/* Layout: one centered study column; sticky green header with breadcrumb; views swap in place */
+:root{
+  --bg:#ffffff; --page:#fafcfa; --surface:#f1f8f0; --surface-2:#e2f1df; --line:#dfe9dd; --tabbar:#e9ecef;
+  --fg:#1f2a1f; --muted:#6b7a6b; --accent:#3e7b3a; --accent-strong:#2f6a2c; --accent-soft:#e3f2e0; --on-accent:#ffffff;
+  --card-a:#ffffff; --card-b:#f1f9ef; --card-line:#d2ebcf;
+  --good:#2f7d32; --good-bg:#e5f4e3; --bad:#c0392b; --bad-bg:#fdecea; --blue:#3b6aa0; --blue-bg:#e6effa;
+  --shadow:0 2px 6px rgba(62,123,58,.06),0 8px 24px rgba(62,123,58,.08);
+  --f-display:"Lexend","Be Vietnam Pro",system-ui,sans-serif;
+  --f-body:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-ipa:"Noto Sans","Segoe UI","Lucida Sans Unicode",sans-serif;
+  --r:14px;
+}
+:root,:root[data-theme="dark"]{color-scheme:light}
+
+*{box-sizing:border-box}
+body{background:var(--page);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.55}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible,.tile:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);color:var(--fg);border-bottom:1px solid var(--card-line);box-shadow:0 2px 10px rgba(62,123,58,.07)}
+.top-in{max-width:880px;margin:0 auto;padding-block:12px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.brand{font-family:var(--f-display);font-weight:700;font-size:18px;letter-spacing:-.01em;background:none;border:0;color:var(--accent);padding:0;display:flex;align-items:center;gap:10px}
+.logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#5a9a52,#3e7b3a);color:#fff;display:grid;place-items:center;font-size:17px;box-shadow:0 2px 6px rgba(62,123,58,.3)}
+.crumbs{display:flex;flex-wrap:wrap;gap:4px;font-size:13px;opacity:.95;min-width:0}
+.crumbs button{background:none;border:0;color:var(--muted);padding:2px 4px;border-radius:6px}
+.crumbs button:hover{color:var(--accent);background:var(--accent-soft)}
+.crumbs .cur{color:var(--accent)}
+.crumbs span.sep{opacity:.6}
+.crumbs .cur{padding:2px 4px;font-weight:600}
+
+main{max-width:880px;margin:0 auto;padding-block:24px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:24px}
+h1,h2,h3{font-family:var(--f-display);margin:0;text-wrap:balance;letter-spacing:-.015em}
+h1{font-size:clamp(24px,5vw,32px);line-height:1.2}
+h2{font-size:19px}
+h3{font-size:16px}
+.lead{color:var(--muted);margin:6px 0 0;max-width:62ch}
+.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);font-weight:600}
+.muted{color:var(--muted)}
+.section{display:flex;flex-direction:column;gap:12px}
+
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
+.card{background:var(--bg);border:1px solid var(--line);box-shadow:0 1px 3px rgba(62,123,58,.04);border-radius:var(--r);padding:16px;text-align:left;display:flex;flex-direction:column;gap:6px;transition:border-color .15s,box-shadow .15s,transform .15s}
+button.card:hover{border-color:var(--accent);box-shadow:var(--shadow);transform:translateY(-1px)}
+.card.soon{background:var(--surface);color:var(--muted);cursor:default}
+.card .meta{font-size:13px;color:var(--muted)}
+.pill{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;background:var(--accent-soft);color:var(--accent-strong);width:fit-content}
+.pill.grey{color:var(--blue);background:var(--blue-bg)}
+.pill.grey{color:var(--muted);background:var(--surface)}
+.bar{height:6px;border-radius:99px;background:var(--surface-2);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);border-radius:99px;transition:width .3s}
+
+.hero{background:var(--bg);box-shadow:var(--shadow);border:1px solid var(--line);border-radius:var(--r);padding:20px;display:flex;flex-direction:column;gap:12px}
+.seg{display:inline-flex;background:var(--tabbar);border-radius:12px;padding:4px;gap:2px;flex-wrap:wrap}
+.seg button{border:0;background:none;padding:6px 12px;border-radius:8px;font-size:13px;font-weight:500;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--bg);color:var(--accent);font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+
+.mode{min-height:112px}
+.mode .tag{font-size:12px;color:var(--muted)}
+.mode h3{display:flex;align-items:center;gap:8px}
+.mode .ico{width:28px;height:28px;border-radius:8px;background:var(--surface-2);color:var(--accent-strong);display:grid;place-items:center;flex:none}
+.mode .ico svg{width:16px;height:16px}
+
+.vlist{border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--bg)}
+.vrow{display:grid;grid-template-columns:36px 1fr;gap:10px;padding:10px 12px;border-top:1px solid var(--line);align-items:start}
+.vrow:first-child{border-top:0}
+.vrow .en{font-weight:600;color:var(--accent-strong)}
+.vrow .ipa{font-family:var(--f-ipa);color:var(--muted);font-size:13px;margin-left:6px}
+.vrow .vi{color:var(--muted);font-size:14px}
+.vrow.known .en::after{content:"đã thuộc";font-size:11px;font-weight:600;color:var(--accent-strong);background:var(--surface-2);padding:1px 6px;border-radius:99px;margin-left:8px;vertical-align:2px}
+.spk{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--bg);display:grid;place-items:center;color:var(--accent-strong);flex:none}
+.spk:hover{background:var(--surface-2)}
+.spk svg{width:16px;height:16px}
+
+.btn{border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:9px 16px;font-weight:600;font-size:14px;display:inline-flex;align-items:center;gap:6px}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent);box-shadow:0 2px 6px rgba(62,123,58,.25)}
+.btn.primary:hover{background:var(--accent-strong);border-color:var(--accent-strong)}
+.btn:disabled{opacity:.5;cursor:default}
+
+/* exercise */
+.stage{display:flex;flex-direction:column;gap:16px;max-width:620px;width:100%;margin:0 auto}
+.progress{display:flex;align-items:center;gap:12px;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.progress .bar{flex:1}
+.q{background:linear-gradient(180deg,var(--card-a),var(--card-b));border:1px solid var(--card-line);box-shadow:var(--shadow);border-radius:var(--r);padding:24px 20px;text-align:center;display:flex;flex-direction:column;gap:10px;align-items:center}
+.q .label{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600}
+.q .big{color:var(--accent);font-family:var(--f-display);font-size:clamp(20px,4.5vw,26px);font-weight:600;line-height:1.3;text-wrap:balance}
+.opts{display:grid;gap:8px}
+.opt{border:1.5px solid var(--line);background:var(--bg);border-radius:10px;padding:12px 14px;text-align:left;display:flex;gap:10px;align-items:center;font-size:15px}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt .k{width:24px;height:24px;border-radius:6px;background:var(--surface-2);color:var(--muted);font-size:12px;font-weight:700;display:grid;place-items:center;flex:none}
+.opt.right{border-color:var(--good);background:var(--good-bg)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-bg)}
+.opt:disabled{cursor:default}
+.fb{border-radius:10px;padding:12px 14px;font-size:14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.fb.ok{background:var(--good-bg);color:var(--good)}
+.fb.no{background:var(--bad-bg);color:var(--bad)}
+.fb b{color:var(--fg)}
+.inp{width:100%;font:inherit;font-size:17px;padding:12px 14px;border-radius:10px;border:1.5px solid var(--line);background:var(--bg);color:var(--fg)}
+.inp.right{border-color:var(--good)} .inp.wrong{border-color:var(--bad)}
+.hint{font-family:var(--f-ipa);letter-spacing:.06em;color:var(--muted);font-size:15px}
+
+/* flashcard */
+.fc{perspective:1200px;width:100%;height:260px;cursor:pointer;background:none;border:0;padding:0}
+.fc-in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.fc.flip .fc-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:16px;border:1px solid var(--card-line);background:linear-gradient(180deg,var(--card-a),var(--card-b));box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:20px;text-align:center}
+.face.back{transform:rotateY(180deg);background:linear-gradient(180deg,var(--card-b),var(--surface-2))}
+.face .w{color:var(--accent);font-family:var(--f-display);font-size:clamp(22px,5vw,30px);font-weight:600;line-height:1.25;text-wrap:balance}
+.face .ipa{font-family:var(--f-ipa);color:var(--accent-strong);opacity:.85;font-size:16px;letter-spacing:.02em}
+.face .tap{position:absolute;bottom:12px;font-size:12px;color:var(--muted)}
+.face .typ{position:absolute;top:12px;left:14px}
+
+.uk{font-family:var(--f-body);font-size:10px;font-weight:700;letter-spacing:.06em;color:var(--accent-strong);background:var(--surface-2);border-radius:4px;padding:1px 5px;margin-right:6px;vertical-align:2px}
+.face .sub-en{font-weight:600;font-size:17px;margin-top:4px}
+.face .vi-sm{color:var(--muted);font-size:16px}
+.face .st{position:absolute;top:12px;right:14px}
+.pill.bad{color:var(--bad);background:var(--bad-bg)}
+.good-t{color:var(--good)} .bad-t{color:var(--bad)}
+.judge{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center}
+.judge .btn{justify-content:center;padding:12px 16px}
+.btn.miss{border-color:var(--bad);color:var(--bad);background:var(--bad-bg)}
+.btn.miss:hover{border-color:var(--bad);filter:brightness(.97)}
+.fc{height:280px}
+.note{border:1px solid var(--card-line);background:var(--bg);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;text-align:left}
+.note-h{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--accent)}
+.note-ic{width:20px;height:20px;border-radius:50%;background:var(--accent);color:var(--on-accent);display:grid;place-items:center;font-size:12px;font-family:Georgia,serif;font-style:italic;text-transform:none}
+.note-tip{margin:0;font-size:14px;line-height:1.6}
+.ext{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:6px}
+.ext-i{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:7px 10px;text-align:left;display:flex;flex-direction:column;gap:1px;font-size:13px}
+.ext-i b{color:var(--accent-strong);font-weight:600}
+.ext-i span{color:var(--muted);font-size:12.5px}
+.ext-i:hover{border-color:var(--accent);background:var(--accent-soft)}
+.vd{margin-top:6px}
+.vd summary{cursor:pointer;font-size:12.5px;color:var(--accent);font-weight:600;width:fit-content}
+.vd .note{margin-top:8px}
+.pill.nw{background:#fff3d6;color:#9a6a00}
+.nw-card{border-color:#f1dfae;background:linear-gradient(180deg,#ffffff,#fffaf0)}
+.nw-card:hover{border-color:#e0b84f!important}
+.note-ex{display:flex;gap:10px;align-items:flex-start;border-top:1px dashed var(--line);padding-top:10px}
+.spk.sm{width:30px;height:30px}
+.spk.sm svg{width:14px;height:14px}
+.ex-en{font-weight:500;font-size:14px}
+.ex-vi{color:var(--muted);font-size:13px}
+.tw{border:0;background:none;padding:0 1px;font:inherit;font-weight:600;color:var(--accent-strong);border-bottom:1.5px dotted var(--accent);border-radius:0;cursor:pointer}
+.tw:hover{background:var(--accent-soft)}
+.tvoc{display:flex;flex-wrap:wrap;gap:6px}
+.tv{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 12px 4px 4px;font-size:13px;max-width:100%}
+.tv:hover{border-color:var(--accent);background:var(--accent-soft)}
+.tv-ic{width:22px;height:22px;border-radius:50%;background:var(--bg);border:1px solid var(--line);display:grid;place-items:center;color:var(--accent-strong);flex:none}
+.tv-ic svg{width:12px;height:12px}
+.tv b{color:var(--accent-strong);font-weight:600}
+.tv-ipa{font-family:var(--f-ipa);color:var(--muted);font-size:12.5px}
+.vpick{margin-left:auto;display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--muted);min-width:0}
+.vpick select{font:inherit;font-size:12.5px;max-width:190px;padding:5px 8px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--fg)}
+.vpick .spk{width:30px;height:30px}
+@media (max-width:560px){.vpick{margin-left:0;width:100%}.vpick select{flex:1;max-width:none}}
+/* match */
+.mgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+@media (max-width:520px){.mgrid{grid-template-columns:repeat(2,1fr)}}
+.tile{min-height:76px;border:1.5px solid var(--line);background:var(--bg);border-radius:10px;padding:10px;font-size:14px;line-height:1.35;display:flex;align-items:center;justify-content:center;text-align:center;transition:all .15s}
+.tile.en{font-weight:600}
+.tile.sel{border-color:var(--accent);background:var(--surface-2)}
+.tile.bad{border-color:var(--bad);background:var(--bad-bg);animation:shake .3s}
+.tile.done{opacity:0;pointer-events:none;transform:scale(.92)}
+@keyframes shake{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+
+/* scramble */
+.slots{min-height:56px;border:1.5px dashed var(--line);border-radius:10px;padding:8px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.slots.right{border-color:var(--good);border-style:solid;background:var(--good-bg)}
+.slots.wrong{border-color:var(--bad);border-style:solid;background:var(--bad-bg)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+.chip{border:1.5px solid var(--line);background:var(--bg);border-radius:8px;padding:6px 12px;font-weight:500}
+.chip:hover{border-color:var(--accent)}
+
+.score{font-family:var(--f-display);font-size:48px;font-weight:700;color:var(--accent);line-height:1;font-variant-numeric:tabular-nums}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:14px;z-index:20;max-width:calc(100% - 32px)}
+.kbd{font-size:12px;color:var(--muted)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<header class="top"><div class="top-in">
+  <button class="brand" data-go="home"><span class="logo">T</span>Sổ từ TOEIC</button>
+  <nav class="crumbs" id="crumbs" aria-label="Đường dẫn"></nav>
+  <div class="vpick"><label for="voicesel">Giọng đọc</label><select id="voicesel"><option value="">Tự động</option></select><button class="spk" id="vtest" data-say="avocado, association" aria-label="Thử giọng"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg></button></div>
+</div></header>
+<main id="app"></main>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+/* ===================== DỮ LIỆU ===================== */
+const DATA = [
+ {id:"thi-giac", name:"Thị giác", sub:"Nhìn, ngắm, kiểm tra",
+  words:[["sign","/saɪn/","bảng hiệu"],["board","/bɔːd/","bảng"],["merchandise","/ˈmɜːtʃəndaɪs/","hàng hóa"],["on display","/ɒn dɪˈspleɪ/","trưng bày"],["notebook","/ˈnəʊtbʊk/","sổ tay, vở ghi chép"],["painting","/ˈpeɪntɪŋ/","bức tranh"],["document","/ˈdɒkjumənt/","tài liệu"],["rack","/ræk/","móc treo, giá treo"],["article of food","/ˈɑːtɪkl əv fuːd/","thực phẩm (= groceries)"],["scenery","/ˈsiːnəri/","cảnh trí, phong cảnh"]],
+  phrases:[["be looking at merchandise on display","/bi ˈlʊkɪŋ ət ˈmɜːtʃəndaɪs ɒn dɪˈspleɪ/","ngắm nhìn hàng hóa được trưng bày"],["be looking in a drawer","/bi ˈlʊkɪŋ ɪn ə drɔː(r)/","nhìn vào ngăn kéo"],["be looking out the window","/bi ˈlʊkɪŋ aʊt ðə ˈwɪndəʊ/","nhìn ra ngoài cửa sổ"],["be examining some papers","/bi ɪɡˈzæmɪnɪŋ səm ˈpeɪpəz/","kiểm tra một số tài liệu"],["be facing some equipment","/bi ˈfeɪsɪŋ səm ɪˈkwɪpmənt/","nhìn một số thiết bị"],["be gazing at a painting hung on a wall","/bi ˈɡeɪzɪŋ ət ə ˈpeɪntɪŋ hʌŋ ɒn ə wɔːl/","chăm chú nhìn bức tranh treo trên tường"],["be gazing out at the scenery","/bi ˈɡeɪzɪŋ aʊt ət ðə ˈsiːnəri/","ngắm cảnh"],["be focusing on the computer screen","/bi ˈfəʊkəsɪŋ ɒn ðə kəmˈpjuːtə skriːn/","tập trung vào màn hình máy tính"],["be watching a musical performance","/bi ˈwɒtʃɪŋ ə ˈmjuːzɪkl pəˈfɔːməns/","xem buổi biểu diễn âm nhạc"],["be viewing a document in a notebook","/bi ˈvjuːɪŋ ə ˈdɒkjumənt ɪn ə ˈnəʊtbʊk/","xem tài liệu trong vở ghi chép"]]},
+ {id:"chan", name:"Hoạt động của chân", sub:"Đứng, đi, ngồi, lên xuống xe",
+  words:[["shade","/ʃeɪd/","bóng râm"],["path","/pɑːθ/","con đường nhỏ"],["motorcycle","/ˈməʊtəsaɪkl/","xe gắn máy"],["luggage","/ˈlʌɡɪdʒ/","hành lý (= baggage)"],["opposite","/ˈɒpəzɪt/","đối diện"],["rocking chair","/ˈrɒkɪŋ tʃeə(r)/","ghế bập bênh"],["stairs","/steəz/","cầu thang"],["lobby","/ˈlɒbi/","hành lang, sảnh"]],
+  phrases:[["be sitting around the fountain","/bi ˈsɪtɪŋ əˈraʊnd ðə ˈfaʊntən/","ngồi xung quanh đài phun nước"],["be standing behind the counter","/bi ˈstændɪŋ bɪˈhaɪnd ðə ˈkaʊntə(r)/","đứng sau quầy hàng"],["be walking up a stairway","/bi ˈwɔːkɪŋ ʌp ə ˈsteəweɪ/","bước lên cầu thang"],["be strolling along the water's edge","/bi ˈstrəʊlɪŋ əˈlɒŋ ðə ˈwɔːtəz edʒ/","đi dạo dọc bờ sông"],["be crossing the street","/bi ˈkrɒsɪŋ ðə striːt/","băng qua đường"],["be waiting by the train tracks","/bi ˈweɪtɪŋ baɪ ðə treɪn træks/","đợi ở cạnh đường ray"],["be leaning on the railing","/bi ˈliːnɪŋ ɒn ðə ˈreɪlɪŋ/","tựa vào lan can"],["be riding a bicycle by the water","/bi ˈraɪdɪŋ ə ˈbaɪsɪkl baɪ ðə ˈwɔːtə(r)/","đạp xe đạp bên bờ sông"],["be boarding a bus","/bi ˈbɔːdɪŋ ə bʌs/","lên xe buýt"],["be getting into the vehicle","/bi ˈɡetɪŋ ˈɪntə ðə ˈviːəkl/","bước vào xe"],["be exiting through a door","/bi ˈeksɪtɪŋ θruː ə dɔː(r)/","đi ra ngoài cửa"],["be disembarking from the aircraft","/bi ˌdɪsɪmˈbɑːkɪŋ frəm ði ˈeəkrɑːft/","xuống máy bay"]]},
+ {id:"tay", name:"Hoạt động của tay", sub:"Cầm, nhấc, đẩy, đặt, lấy",
+  words:[["item","/ˈaɪtəm/","đồ vật"],["lid","/lɪd/","nắp đậy"],["suitcase","/ˈsuːtkeɪs/","vali"],["photocopier","/ˈfəʊtəʊkɒpiə(r)/","máy photocopy"],["baby stroller","/ˈbeɪbi ˈstrəʊlə(r)/","xe nôi, xe đẩy em bé"],["package","/ˈpækɪdʒ/","gói hàng, kiện hàng"],["device","/dɪˈvaɪs/","máy móc, thiết bị"],["rack","/ræk/","móc treo, giá treo"]],
+  phrases:[["be holding up some merchandise","/bi ˈhəʊldɪŋ ʌp səm ˈmɜːtʃəndaɪs/","cầm một vài món hàng lên"],["be holding headphones with both hands","/bi ˈhəʊldɪŋ ˈhedfəʊnz wɪð bəʊθ hændz/","cầm headphone bằng hai tay"],["be lifting a chair off the floor","/bi ˈlɪftɪŋ ə tʃeər ɒf ðə flɔː(r)/","nhấc ghế lên khỏi sàn nhà"],["be reaching for a book","/bi ˈriːtʃɪŋ fər ə bʊk/","với lấy một quyển sách"],["be pushing a button","/bi ˈpʊʃɪŋ ə ˈbʌtn/","ấn nút"],["be pushing a cart","/bi ˈpʊʃɪŋ ə kɑːt/","đẩy xe đẩy hàng"],["be pointing at something on a paper","/bi ˈpɔɪntɪŋ ət ˈsʌmθɪŋ ɒn ə ˈpeɪpə(r)/","chỉ vào cái gì đó trên tờ giấy"],["be positioning a sheet of paper on the glass","/bi pəˈzɪʃənɪŋ ə ʃiːt əv ˈpeɪpər ɒn ðə ɡlɑːs/","đặt một tờ giấy lên kính"],["be placing a file folder","/bi ˈpleɪsɪŋ ə faɪl ˈfəʊldə(r)/","đặt một tập tài liệu"],["be taking a book from the bookcase","/bi ˈteɪkɪŋ ə bʊk frəm ðə ˈbʊkkeɪs/","lấy một quyển sách từ tủ sách"],["be turning a page","/bi ˈtɜːnɪŋ ə peɪdʒ/","lật một trang giấy"],["be throwing away some garbage","/bi ˈθrəʊɪŋ əˈweɪ səm ˈɡɑːbɪdʒ/","vứt rác"],["be unfolding a map","/bi ʌnˈfəʊldɪŋ ə mæp/","mở một tấm bản đồ"],["be carrying some plants","/bi ˈkæriɪŋ səm plɑːnts/","mang một vài cái cây"]]},
+ {id:"cong-viec", name:"Công việc", sub:"Văn phòng, hội họp",
+  words:[["meeting","/ˈmiːtɪŋ/","cuộc họp, hội nghị"],["round table","/ˌraʊnd ˈteɪbl/","bàn tròn"],["overhead projector","/ˌəʊvəhed prəˈdʒektə(r)/","máy chiếu"],["conference hall","/ˈkɒnfərəns hɔːl/","phòng hội nghị"],["filing","/ˈfaɪlɪŋ/","sắp xếp tài liệu"],["notepad","/ˈnəʊtpæd/","vở ghi chép"],["handout","/ˈhændaʊt/","tài liệu phát tay"],["group discussion","/ɡruːp dɪˈskʌʃn/","thảo luận nhóm"]],
+  phrases:[["be working at a desk","/bi ˈwɜːkɪŋ ət ə desk/","làm việc tại bàn làm việc"],["be handling some documents","/bi ˈhændlɪŋ səm ˈdɒkjumənts/","xử lý một số tài liệu"],["be arranging the desk","/bi əˈreɪndʒɪŋ ðə desk/","sắp xếp bàn làm việc"],["be organizing files on a shelf","/bi ˈɔːɡənaɪzɪŋ faɪlz ɒn ə ʃelf/","sắp xếp hồ sơ trên kệ"],["be operating a computer","/bi ˈɒpəreɪtɪŋ ə kəmˈpjuːtə(r)/","sử dụng máy tính"],["be typing on a keyboard","/bi ˈtaɪpɪŋ ɒn ə ˈkiːbɔːd/","đánh chữ trên bàn phím"],["be signing a paper","/bi ˈsaɪnɪŋ ə ˈpeɪpə(r)/","ký giấy tờ"],["be carrying a briefcase","/bi ˈkæriɪŋ ə ˈbriːfkeɪs/","xách cặp đựng tài liệu"],["be delivering the mail","/bi dɪˈlɪvərɪŋ ðə meɪl/","phát bưu phẩm"],["be having a discussion","/bi ˈhævɪŋ ə dɪˈskʌʃn/","thảo luận"]]},
+ {id:"cong-viec-1", name:"Công việc (1)", sub:"Công trường, sửa chữa",
+  words:[["heavy equipment","/ˈhevi ɪˈkwɪpmənt/","thiết bị hạng nặng (= heavy machinery)"],["wheelbarrow","/ˈwiːlbærəʊ/","xe cút kít"],["protective glasses","/prəˈtektɪv ˈɡlɑːsɪz/","kính bảo hộ"],["protective gear","/prəˈtektɪv ɡɪə(r)/","đồ dùng bảo hộ"],["work vest","/wɜːk vest/","áo bảo hộ lao động"],["safety helmet","/ˈseɪfti ˈhelmɪt/","mũ bảo hộ"],["building materials","/ˈbɪldɪŋ məˈtɪəriəlz/","vật liệu xây dựng"],["tool belt","/tuːl belt/","đai dụng cụ"],["container","/kənˈteɪnə(r)/","thùng chứa hàng, hộp lớn"],["electrical wire","/ɪˈlektrɪkl ˈwaɪə(r)/","dây điện"]],
+  phrases:[["be working at a construction site","/bi ˈwɜːkɪŋ ət ə kənˈstrʌkʃn saɪt/","làm việc tại công trường xây dựng"],["be working on a construction","/bi ˈwɜːkɪŋ ɒn ə kənˈstrʌkʃn/","xây dựng"],["be working at a table","/bi ˈwɜːkɪŋ ət ə ˈteɪbl/","làm việc tại bàn"],["be riding on a bicycle","/bi ˈraɪdɪŋ ɒn ə ˈbaɪsɪkl/","đạp xe đạp"],["be operating heavy machinery","/bi ˈɒpəreɪtɪŋ ˈhevi məˈʃiːnəri/","vận hành thiết bị hạng nặng"],["be inspecting the motor of the car","/bi ɪnˈspektɪŋ ðə ˈməʊtər əv ðə kɑː(r)/","kiểm tra động cơ ô tô"],["be building a rock wall","/bi ˈbɪldɪŋ ə rɒk wɔːl/","dựng một bức tường đá"],["be laying bricks","/bi ˈleɪɪŋ brɪks/","đặt những viên gạch"],["be painting a window frame","/bi ˈpeɪntɪŋ ə ˈwɪndəʊ freɪm/","sơn một khung cửa sổ"],["be using a shovel to dig a hole","/bi ˈjuːzɪŋ ə ˈʃʌvl tə dɪɡ ə həʊl/","dùng xẻng đào một cái hố"],["be taking a measurement","/bi ˈteɪkɪŋ ə ˈmeʒəmənt/","đo lường"]]},
+ {id:"cong-viec-2", name:"Công việc (2)", sub:"Làm vườn, dọn dẹp, kho bãi",
+  words:[["fence","/fens/","hàng rào"],["porch","/pɔːtʃ/","cổng vòm, hiên nhà"],["warehouse","/ˈweəhaʊs/","nhà kho"],["pile","/paɪl/","chồng, đống; chất đống"],["broom","/bruːm/","chổi"],["flower bed","/ˈflaʊə bed/","luống hoa"],["floral arrangement","/ˈflɔːrəl əˈreɪndʒmənt/","cắm hoa"],["renovation","/ˌrenəˈveɪʃn/","tu sửa"]],
+  phrases:[["be watering the plants","/bi ˈwɔːtərɪŋ ðə plɑːnts/","tưới cây"],["be trimming some branches","/bi ˈtrɪmɪŋ səm ˈbrɑːntʃɪz/","tỉa vài cành cây"],["be taking care of some plants","/bi ˈteɪkɪŋ keər əv səm plɑːnts/","chăm sóc cây cối"],["be picking some flowers","/bi ˈpɪkɪŋ səm ˈflaʊəz/","hái một vài bông hoa"],["be sweeping the floor","/bi ˈswiːpɪŋ ðə flɔː(r)/","quét sàn nhà"],["be mopping the floor","/bi ˈmɒpɪŋ ðə flɔː(r)/","lau sàn nhà"],["be raking leaves on the ground","/bi ˈreɪkɪŋ liːvz ɒn ðə ɡraʊnd/","cào lá trên mặt đất"],["be cutting grass in a pasture","/bi ˈkʌtɪŋ ɡrɑːs ɪn ə ˈpɑːstʃə(r)/","cắt cỏ trên đồng"],["be pushing an empty cart","/bi ˈpʊʃɪŋ ən ˈempti kɑːt/","đẩy một chiếc xe đẩy hàng trống"],["be climbing up the ladder","/bi ˈklaɪmɪŋ ʌp ðə ˈlædə(r)/","trèo lên thang"],["be transporting some items on a cart","/bi trænˈspɔːtɪŋ səm ˈaɪtəmz ɒn ə kɑːt/","chuyển những món đồ bằng xe đẩy hàng"]]},
+ {id:"thuc-an", name:"Thức ăn", sub:"Nấu nướng, nhà hàng, mua sắm",
+  words:[["pot","/pɒt/","nồi"],["apron","/ˈeɪprən/","tạp dề"],["cupboard","/ˈkʌbəd/","tủ chén"],["pitcher","/ˈpɪtʃə(r)/","bình rót nước"],["tablecloth","/ˈteɪblklɒθ/","khăn trải bàn"],["faucet","/ˈfɔːsɪt/","vòi nước"],["utensil","/juːˈtensl/","đồ dùng nhà bếp"],["bakeshop","/ˈbeɪkʃɒp/","tiệm bánh"]],
+  phrases:[["be cooking some food","/bi ˈkʊkɪŋ səm fuːd/","nấu vài món ăn"],["be chopping up some vegetables","/bi ˈtʃɒpɪŋ ʌp səm ˈvedʒtəblz/","thái rau"],["be wearing an apron","/bi ˈweərɪŋ ən ˈeɪprən/","đeo tạp dề"],["be setting a table","/bi ˈsetɪŋ ə ˈteɪbl/","dọn bàn (bày bàn ăn)"],["be using a sink","/bi ˈjuːzɪŋ ə sɪŋk/","sử dụng bồn rửa"],["be shopping for groceries","/bi ˈʃɒpɪŋ fə ˈɡrəʊsəriz/","mua hàng tạp hoá"],["be eating inside a restaurant","/bi ˈiːtɪŋ ˌɪnˈsaɪd ə ˈrestrɒnt/","ăn tại nhà hàng"],["be having a meal","/bi ˈhævɪŋ ə miːl/","dùng bữa"],["be ordering food","/bi ˈɔːdərɪŋ fuːd/","gọi món"],["be serving food to the customers","/bi ˈsɜːvɪŋ fuːd tə ðə ˈkʌstəməz/","mang thức ăn cho khách"],["be pouring water into a glass","/bi ˈpɔːrɪŋ ˈwɔːtər ˈɪntə ə ɡlɑːs/","rót nước vào ly"],["be packing some food into the plastic container","/bi ˈpækɪŋ səm fuːd ˈɪntə ðə ˈplæstɪk kənˈteɪnə(r)/","đóng gói thực phẩm trong hộp nhựa"]]},
+ {id:"ngoai-troi", name:"Hoạt động ngoài trời", sub:"Giải trí, du lịch, sân bay",
+  words:[["performance","/pəˈfɔːməns/","buổi biểu diễn"],["shore","/ʃɔː(r)/","bờ biển"],["view","/vjuː/","phong cảnh (= scenery)"],["amusement park","/əˈmjuːzmənt pɑːk/","khu vui chơi"],["seashell","/ˈsiːʃel/","vỏ sò"],["camping gear","/ˈkæmpɪŋ ɡɪə(r)/","đồ dùng cắm trại"],["paddle","/ˈpædl/","mái chèo"],["deck","/dek/","boong tàu"],["swing","/swɪŋ/","xích đu"],["backpack","/ˈbækpæk/","ba lô"]],
+  phrases:[["be attending a concert","/bi əˈtendɪŋ ə ˈkɒnsət/","tham dự một buổi hòa nhạc"],["be watching a film","/bi ˈwɒtʃɪŋ ə fɪlm/","xem một bộ phim"],["be fishing from a boat","/bi ˈfɪʃɪŋ frəm ə bəʊt/","câu cá trên thuyền"],["be traveling through the canyon","/bi ˈtrævəlɪŋ θruː ðə ˈkænjən/","du hành qua hẻm núi"],["be playing a game","/bi ˈpleɪɪŋ ə ɡeɪm/","chơi một trò chơi"],["be kicking a ball into the air","/bi ˈkɪkɪŋ ə bɔːl ˈɪntu ði eə(r)/","đá quả bóng lên không trung"],["be packing a suitcase","/bi ˈpækɪŋ ə ˈsuːtkeɪs/","xếp hành lý vào vali"],["be screening some luggage","/bi ˈskriːnɪŋ səm ˈlʌɡɪdʒ/","kiểm tra hành lý"],["be hiking in the forest","/bi ˈhaɪkɪŋ ɪn ðə ˈfɒrɪst/","đi bộ đường dài trong rừng"],["be reading a sign near the water","/bi ˈriːdɪŋ ə saɪn nɪə ðə ˈwɔːtə(r)/","đọc biển báo gần mặt nước"]]}
+];
+/* Giải thích + từ mở rộng hay gặp trong TOEIC. Mỗi mục: [mẹo nhớ, "từ – nghĩa", ...] */
+const NOTES = {
+"sign":["Part 1 hay tả biển báo, bảng chỉ dẫn. Khi là động từ, sign nghĩa là ký tên.","signpost – cột biển chỉ đường","be posted – (biển) được dán/treo lên","signature – chữ ký"],
+"board":["Bảng nói chung. Là động từ thì nghĩa là lên (xe, tàu, máy bay).","bulletin board – bảng tin","whiteboard – bảng trắng","board a train – lên tàu"],
+"merchandise":["Không thêm -s: nói merchandise, không nói merchandises. Hay gặp ở tranh cửa hàng.","goods – hàng hóa","be displayed on shelves – được bày trên kệ","stock the shelves – xếp hàng lên kệ"],
+"on display":["Cụm rất hay gặp khi tả cửa hàng, bảo tàng, tủ kính.","be displayed – được trưng bày","display case – tủ kính trưng bày","exhibit – vật trưng bày, triển lãm"],
+"notebook":["Có thể là sổ giấy hoặc máy tính xách tay (notebook computer).","laptop – máy tính xách tay","take notes – ghi chép","binder – bìa còng kẹp hồ sơ"],
+"painting":["Bức tranh sơn. Đừng nhầm với painting a wall = đang sơn tường.","artwork – tác phẩm nghệ thuật","frame – khung tranh","be hung on the wall – được treo trên tường"],
+"document":["Giấy tờ văn phòng. Part 1 hay dùng papers thay cho documents.","paperwork – giấy tờ","file – hồ sơ","review a document – xem lại tài liệu"],
+"rack":["Giá để treo hoặc đặt đồ: quần áo, xe đạp, bát đĩa.","coat rack – giá treo áo khoác","bicycle rack – giá để xe đạp","be hanging on a rack – đang treo trên giá"],
+"article of food":["article ở đây = một món đồ. Cùng nghĩa với groceries.","groceries – thực phẩm, đồ tạp hóa","produce – rau củ quả tươi","food items – các món thực phẩm"],
+"scenery":["Cảnh thiên nhiên. Không thêm -s.","landscape – phong cảnh","view – quang cảnh","scenic – có cảnh đẹp"],
+"be looking at merchandise on display":["look at = nhìn có chủ đích. Dấu hiệu: người đứng trước kệ hàng hoặc tủ kính.","browse – xem lướt hàng","examine an item – xem kỹ món hàng","window-shop – ngắm hàng qua tủ kính"],
+"be looking in a drawer":["look in = nhìn vào bên trong (ngăn kéo, tủ, túi).","open a drawer – mở ngăn kéo","search through – lục tìm","cabinet – tủ"],
+"be looking out the window":["Bẫy hay gặp: đáp án sai nói cleaning the window khi người chỉ đang nhìn ra.","gaze out – nhìn ra xa","windowsill – bậu cửa sổ","be open / be closed – (cửa) đang mở / đóng"],
+"be examining some papers":["examine = xem xét kỹ, mạnh hơn look at.","review – xem lại","inspect – kiểm tra","look over – xem qua"],
+"be facing some equipment":["face = quay mặt về phía. Rất hay dùng để tả hướng người đứng hoặc ngồi.","face each other – đối diện nhau","face the same direction – cùng nhìn một hướng","be turned toward – quay về phía"],
+"be gazing at a painting hung on a wall":["gaze = nhìn lâu. hung on a wall = được treo trên tường.","admire – ngắm và trầm trồ","stare at – nhìn chằm chằm","hang – hung – hung: treo"],
+"be gazing out at the scenery":["gaze out at = nhìn ra xa. Hay gặp ở tranh người đứng ban công, bờ biển.","overlook – nhìn xuống từ trên cao","enjoy the view – ngắm cảnh","take in the view – thưởng ngoạn cảnh"],
+"be focusing on the computer screen":["focus on = tập trung vào.","monitor – màn hình","concentrate on – tập trung vào","be absorbed in – mải mê"],
+"be watching a musical performance":["watch dùng cho thứ đang diễn ra, chuyển động.","audience – khán giả","musician – nhạc công","perform on stage – biểu diễn trên sân khấu"],
+"be viewing a document in a notebook":["view = xem, trang trọng hơn look at.","read through – đọc hết","refer to – tham khảo","flip through – lật xem nhanh"],
+"shade":["Bóng râm, không có hình dạng. Shadow là cái bóng có hình dạng.","in the shade – trong bóng râm","shadow – cái bóng","awning – mái hiên che nắng"],
+"path":["Lối đi nhỏ trong công viên, rừng.","walkway – lối đi bộ","trail – đường mòn","sidewalk – vỉa hè"],
+"motorcycle":["Part 1 hay tả xe đang đỗ.","be parked – đang đỗ","helmet – mũ bảo hiểm","scooter – xe tay ga"],
+"luggage":["Không thêm -s: nói luggage, không nói luggages.","baggage – hành lý","baggage claim – khu nhận hành lý","carry-on bag – hành lý xách tay"],
+"opposite":["Chỉ vị trí đối diện, hay đi với side.","across from – đối diện","on the opposite side of – ở phía bên kia","face each other – đối mặt nhau"],
+"rocking chair":["rock = đung đưa. Ghế có chân cong để đu đưa.","armchair – ghế bành","bench – ghế dài","be unoccupied – (ghế) đang trống"],
+"stairs":["Luôn dùng số nhiều. Một bậc là a step.","staircase / stairway – cầu thang","escalator – thang cuốn","handrail – tay vịn"],
+"lobby":["Sảnh vào của khách sạn, tòa nhà.","reception desk – quầy lễ tân","entrance – lối vào","waiting area – khu vực chờ"],
+"be sitting around the fountain":["around = xung quanh. Hay gặp kèm: sitting on a bench, side by side.","be seated – đang ngồi","side by side – cạnh nhau","water is spraying – nước đang phun"],
+"be standing behind the counter":["behind = phía sau. Tranh người bán hàng, lễ tân, thu ngân.","cashier – thu ngân","checkout counter – quầy tính tiền","wait in line – xếp hàng"],
+"be walking up a stairway":["walk up = đi lên, walk down = đi xuống. Nghe kỹ up hay down.","climb the stairs – leo cầu thang","descend the stairs – đi xuống cầu thang","hold the handrail – vịn tay vịn"],
+"be strolling along the water's edge":["stroll = đi dạo thong thả. along = dọc theo.","walk along the shore – đi dọc bờ biển","waterfront – khu ven sông, ven biển","pier – cầu tàu"],
+"be crossing the street":["Bẫy hay gặp: người đứng chờ ở vạch nhưng chưa băng qua.","crosswalk – vạch qua đường","intersection – ngã tư","traffic light – đèn giao thông"],
+"be waiting by the train tracks":["by = cạnh. Tranh nhà ga, sân ga.","platform – sân ga","be waiting to board – đang chờ lên tàu","pull into the station – (tàu) vào ga"],
+"be leaning on the railing":["lean on / against = tựa vào. Rất hay gặp trong Part 1.","lean against a wall – tựa vào tường","handrail – tay vịn","rest one's arms on – tì tay lên"],
+"be riding a bicycle by the water":["ride a bicycle / bike / horse. Đừng nhầm với repairing a bicycle.","cyclist – người đi xe đạp","be parked next to – đang đỗ cạnh","wear a helmet – đội mũ bảo hiểm"],
+"be boarding a bus":["board = lên xe, tàu, máy bay. Bẫy: xe đang đỗ nhưng chưa ai lên.","get on – lên xe","passenger – hành khách","board a plane – lên máy bay"],
+"be getting into the vehicle":["get into = vào (ô tô). get out of = ra khỏi xe.","get out of – ra khỏi xe","open the car door – mở cửa xe","driver's seat – ghế lái"],
+"be exiting through a door":["exit = đi ra. Danh từ exit = lối ra.","enter – đi vào","doorway – ô cửa","leave the building – rời tòa nhà"],
+"be disembarking from the aircraft":["disembark = xuống máy bay. Ngược lại: board = lên máy bay.","get off the plane – xuống máy bay","jet bridge – ống lồng nối máy bay","passengers are exiting – hành khách đang ra"],
+"item":["Đồ vật, món hàng nói chung. Dùng ở mọi Part.","items on the shelf – đồ trên kệ","be arranged – được sắp xếp","goods – hàng hóa"],
+"lid":["Nắp nồi, hộp, thùng rác.","cover – nắp, che phủ","remove the lid – mở nắp","be covered – được đậy lại"],
+"suitcase":["Vali có tay xách hoặc bánh xe.","pack a suitcase – xếp đồ vào vali","roll a suitcase – kéo vali","be stacked – được xếp chồng"],
+"photocopier":["Còn gọi là copier hoặc copy machine. Tranh văn phòng.","make copies – photo tài liệu","lift the cover – nâng nắp máy","paper tray – khay giấy"],
+"baby stroller":["Cách nói Mỹ. Anh–Anh dùng pushchair hoặc pram.","push a stroller – đẩy xe em bé","pram – xe nôi (Anh)","sidewalk – vỉa hè"],
+"package":["Gói, kiện hàng gửi đi. Hay đi với deliver, carry.","parcel – bưu kiện","carton – thùng các-tông","deliver a package – giao kiện hàng"],
+"device":["Thiết bị như điện thoại, máy tính bảng.","equipment – thiết bị (không đếm được)","machine – máy","mobile device – thiết bị di động"],
+"be holding up some merchandise":["hold up = giơ lên, cầm lên cho người khác xem.","hold – cầm","show an item – cho xem món đồ","examine a product – xem kỹ sản phẩm"],
+"be holding headphones with both hands":["with both hands = bằng hai tay; with one hand = bằng một tay.","put on headphones – đeo tai nghe vào","wear headphones – đang đeo tai nghe","earphones – tai nghe nhét tai"],
+"be lifting a chair off the floor":["lift = nhấc lên. off the floor = khỏi sàn.","pick up – nhặt lên","raise – nâng lên","move furniture – di chuyển đồ đạc"],
+"be reaching for a book":["reach for = với tay lấy. Hay gặp ở tranh thư viện, siêu thị.","reach into – thò tay vào","take down from a shelf – lấy xuống từ kệ","top shelf – kệ trên cùng"],
+"be pushing a button":["press a button cũng được. Tranh thang máy, máy photo.","press – ấn","elevator – thang máy","control panel – bảng điều khiển"],
+"be pushing a cart":["cart (Mỹ) = trolley (Anh): xe đẩy siêu thị, sân bay.","shopping cart – xe đẩy mua sắm","trolley – xe đẩy (Anh)","wheel – đẩy (vật có bánh xe)"],
+"be pointing at something on a paper":["point at / to = chỉ vào. Tranh hai người cùng xem tài liệu.","indicate – chỉ ra","gesture toward – ra hiệu về phía","show someone – cho ai xem"],
+"be positioning a sheet of paper on the glass":["Tranh máy photo: đặt giấy lên mặt kính.","place – đặt","copier glass – mặt kính máy photo","make a copy – photo một bản"],
+"be placing a file folder":["place = put = đặt xuống.","put down – đặt xuống","set something on – đặt cái gì lên","folder – bìa hồ sơ"],
+"be taking a book from the bookcase":["take from = lấy ra. Phân biệt với put back = cất lại.","remove – lấy ra","put back – cất lại","bookshelf – kệ sách"],
+"be turning a page":["turn the page = lật trang.","flip through – lật nhanh","read a book – đọc sách","page through – giở từng trang"],
+"be throwing away some garbage":["throw away = vứt bỏ. garbage (Mỹ) = rubbish (Anh).","trash – rác","trash can / bin – thùng rác","empty a bin – đổ thùng rác"],
+"be unfolding a map":["unfold = mở ra; fold = gấp lại.","fold – gấp","study a map – xem bản đồ","spread out – trải ra"],
+"be carrying some plants":["carry = mang, xách, bê. Một trong những động từ phổ biến nhất Part 1.","potted plant – cây trồng trong chậu","hold – cầm","transport – vận chuyển"],
+"meeting":["Cuộc họp. Rất phổ biến ở Part 1, 3, 4.","attend a meeting – dự họp","conference room – phòng họp","lead a meeting – chủ trì cuộc họp"],
+"round table":["Bàn tròn, cũng chỉ buổi thảo luận bàn tròn.","be seated around a table – ngồi quanh bàn","rectangular table – bàn chữ nhật","chairs are arranged – ghế được xếp"],
+"overhead projector":["Máy chiếu treo trên trần hoặc đặt trên bàn.","projector screen – màn chiếu","give a presentation – thuyết trình","slide – trang chiếu"],
+"conference hall":["Hội trường lớn.","auditorium – thính phòng","seats are occupied – ghế có người ngồi","podium – bục phát biểu"],
+"filing":["file (v) = lưu trữ hồ sơ.","filing cabinet – tủ đựng hồ sơ","file documents – cất hồ sơ","drawer – ngăn kéo"],
+"notepad":["Tập giấy ghi chú.","take notes – ghi chép","sticky note – giấy nhớ","write on a notepad – viết lên sổ"],
+"handout":["Tài liệu phát cho người tham dự.","hand out / distribute – phát","pass out papers – phát giấy","brochure – tờ giới thiệu"],
+"group discussion":["Thảo luận nhóm.","have a discussion – thảo luận","brainstorm – động não","exchange ideas – trao đổi ý kiến"],
+"be working at a desk":["at a desk = tại bàn làm việc. Tranh văn phòng cơ bản nhất.","workstation – chỗ làm việc","be seated at – ngồi tại","cubicle – ô làm việc có vách ngăn"],
+"be handling some documents":["handle = xử lý, cầm nắm.","process – xử lý","sort papers – phân loại giấy tờ","stack of papers – chồng giấy"],
+"be arranging the desk":["arrange = sắp xếp. Bị động: be arranged.","tidy up – dọn gọn","organize – sắp xếp","be neatly arranged – được xếp gọn gàng"],
+"be organizing files on a shelf":["organize = sắp xếp có hệ thống.","put in order – sắp theo thứ tự","label – dán nhãn","shelf (pl. shelves) – kệ"],
+"be operating a computer":["operate = vận hành, sử dụng máy.","use a computer – dùng máy tính","work on a laptop – làm việc trên laptop","log in – đăng nhập"],
+"be typing on a keyboard":["type = gõ phím.","enter data – nhập dữ liệu","mouse – chuột","monitor – màn hình"],
+"be signing a paper":["sign = ký. signature = chữ ký.","sign a contract – ký hợp đồng","fill out a form – điền mẫu đơn","write on – viết lên"],
+"be carrying a briefcase":["Cặp da công sở.","handbag – túi xách","hold – cầm","walk down a hallway – đi dọc hành lang"],
+"be delivering the mail":["deliver = giao. mail (Mỹ) = post (Anh).","mail carrier – người đưa thư","deliver a package – giao kiện hàng","mailbox – hộp thư"],
+"be having a discussion":["have a discussion = discuss = thảo luận.","discuss something – thảo luận việc gì","talk with – nói chuyện với","have a conversation – trò chuyện"],
+"heavy equipment":["Máy móc lớn ở công trường. equipment không thêm -s.","crane – cần cẩu","bulldozer – máy ủi","forklift – xe nâng"],
+"wheelbarrow":["Xe rùa một bánh.","push a wheelbarrow – đẩy xe cút kít","be loaded with – được chất đầy","soil – đất"],
+"protective glasses":["Còn gọi là safety glasses hoặc goggles.","goggles – kính bảo hộ","wear protective gear – mặc đồ bảo hộ","be wearing – đang đeo"],
+"protective gear":["gear = đồ dùng. Không thêm -s.","safety gear – đồ bảo hộ","gloves – găng tay","uniform – đồng phục"],
+"work vest":["Áo gi-lê phản quang của công nhân.","safety vest – áo bảo hộ","reflective – phản quang","put on – mặc vào (hành động)"],
+"safety helmet":["Mỹ gọi là hard hat. Rất hay gặp ở tranh công trường.","hard hat – mũ bảo hộ","wear a helmet – đội mũ","construction worker – công nhân xây dựng"],
+"building materials":["Vật liệu xây dựng: gạch, gỗ, thép.","lumber – gỗ xẻ","bricks – gạch","be piled up – được chất đống"],
+"tool belt":["Đai đeo dụng cụ quanh hông.","toolbox – hộp đồ nghề","hammer – búa","screwdriver – tua vít"],
+"container":["Thùng, hộp đựng; cũng là công-te-nơ ở cảng.","box – hộp","crate – thùng gỗ","shipping container – công-te-nơ"],
+"electrical wire":["Dây điện. wire còn là động từ: đi dây điện.","cable – dây cáp","outlet – ổ cắm","electrician – thợ điện"],
+"be working at a construction site":["construction site = công trường.","construction worker – công nhân xây dựng","scaffolding – giàn giáo","under construction – đang xây dựng"],
+"be working on a construction":["work on = đang làm việc gì đó.","build – xây","construct – xây dựng","project – dự án"],
+"be working at a table":["at a table = tại bàn.","workbench – bàn thợ","be seated – đang ngồi","examine – xem xét"],
+"be riding on a bicycle":["ride (on) a bicycle = đạp xe.","pedal – đạp","cycle – đạp xe","bike lane – làn xe đạp"],
+"be operating heavy machinery":["operate = điều khiển máy.","drive a forklift – lái xe nâng","crane – cần cẩu","machinery – máy móc (không đếm được)"],
+"be inspecting the motor of the car":["inspect = kiểm tra kỹ. Tranh thợ đang sửa xe.","mechanic – thợ máy","hood – nắp capo","repair – sửa chữa"],
+"be building a rock wall":["build = xây.","stone – đá","stack stones – xếp đá","wall – tường"],
+"be laying bricks":["lay = đặt, xếp. Đừng nhầm với lie = nằm.","bricklayer – thợ xây","lay tiles – lát gạch","cement – xi măng"],
+"be painting a window frame":["paint = sơn. Đừng nhầm với painting (bức tranh).","paintbrush – cọ sơn","roller – con lăn sơn","ladder – thang"],
+"be using a shovel to dig a hole":["shovel = cái xẻng, dig = đào.","rake – cái cào","soil – đất","pile of dirt – đống đất"],
+"be taking a measurement":["take a measurement = measure = đo.","measure – đo","tape measure – thước dây","ruler – thước kẻ"],
+"fence":["Hàng rào.","gate – cổng","be painted – được sơn","along the fence – dọc hàng rào"],
+"porch":["Hiên trước nhà, có mái che.","balcony – ban công","patio – sân hiên","steps – bậc thềm"],
+"warehouse":["Nhà kho chứa hàng.","storage – lưu kho","forklift – xe nâng","boxes are stacked – thùng được xếp chồng"],
+"pile":["pile = đống. Hay nghe: be piled up = được chất thành đống.","be piled up – được chất đống","stack – chồng (ngay ngắn)","heap – đống (lộn xộn)"],
+"broom":["Cái chổi. sweep = quét.","sweep – quét","dustpan – cái hốt rác","mop – cây lau nhà"],
+"flower bed":["Luống hoa trong vườn.","plant – trồng","garden – vườn","be in bloom – đang nở hoa"],
+"floral arrangement":["Lẵng hoặc bình hoa đã cắm.","vase – bình hoa","bouquet – bó hoa","centerpiece – vật trang trí giữa bàn"],
+"renovation":["Sửa sang, cải tạo nhà cửa.","renovate – cải tạo","be under renovation – đang được cải tạo","remodel – tu sửa lại"],
+"be watering the plants":["water (v) = tưới.","watering can – bình tưới","hose – vòi tưới","spray – phun"],
+"be trimming some branches":["trim = tỉa, cắt gọn.","prune – tỉa cành","hedge – hàng rào cây","bush – bụi cây"],
+"be taking care of some plants":["take care of = look after = chăm sóc.","tend – chăm sóc","gardener – người làm vườn","plant a tree – trồng cây"],
+"be picking some flowers":["pick = hái; pick up = nhặt lên.","gather – thu gom","harvest – thu hoạch","pick up – nhặt lên"],
+"be sweeping the floor":["sweep = quét bằng chổi.","broom – chổi","dustpan – cái hốt rác","dust – phủi bụi"],
+"be mopping the floor":["mop = lau bằng cây lau nhà. Phân biệt với sweep (quét).","mop – cây lau nhà","wipe – lau chùi","bucket – xô"],
+"be raking leaves on the ground":["rake = cào. Tranh mùa thu, công viên.","rake – cái cào","fallen leaves – lá rụng","gather into a pile – gom thành đống"],
+"be cutting grass in a pasture":["cut grass = mow the lawn.","mow the lawn – cắt cỏ","lawn mower – máy cắt cỏ","field – cánh đồng"],
+"be pushing an empty cart":["empty = trống, ngược với full. Nghe kỹ tính từ.","full – đầy","be loaded – được chất hàng","unload – dỡ hàng"],
+"be climbing up the ladder":["ladder = thang di động; stairs = cầu thang cố định.","be on a ladder – đứng trên thang","lean a ladder against – dựng thang vào","step stool – ghế bậc"],
+"be transporting some items on a cart":["transport = vận chuyển.","move – di chuyển","load – chất hàng lên","hand truck – xe đẩy tay"],
+"pot":["Nồi; cũng là chậu cây (flower pot).","pan – chảo","stove – bếp","potted plant – cây trong chậu"],
+"apron":["Tạp dề.","chef – đầu bếp","put on an apron – mặc tạp dề vào","uniform – đồng phục"],
+"cupboard":["Chữ p không đọc: /ˈkʌbəd/.","cabinet – tủ","shelf – kệ","drawer – ngăn kéo"],
+"pitcher":["Bình có quai và vòi để rót. Anh–Anh hay dùng jug.","jug – bình (Anh)","pour – rót","glass – ly"],
+"tablecloth":["Khăn trải bàn.","napkin – khăn ăn","cover – phủ","set the table – bày bàn"],
+"faucet":["Cách nói Mỹ. Anh–Anh dùng tap.","tap – vòi nước","sink – bồn rửa","turn on / off – mở / tắt"],
+"utensil":["Đồ dùng bếp: dao, nĩa, muôi.","cutlery – dao dĩa","ladle – cái muôi","kitchenware – đồ dùng nhà bếp"],
+"bakeshop":["Cùng nghĩa với bakery.","bakery – tiệm bánh","baked goods – đồ nướng","pastry – bánh ngọt"],
+"be cooking some food":["cook = nấu.","prepare a meal – chuẩn bị bữa ăn","stir – khuấy","fry – rán"],
+"be chopping up some vegetables":["chop = thái, chặt.","slice – thái lát","cutting board – thớt","knife – dao"],
+"be wearing an apron":["wear = đang mặc. put on = đang mặc vào. Đây là bẫy rất hay gặp!","put on – mặc vào","take off – cởi ra","be dressed in – mặc"],
+"be setting a table":["set the table = bày bát đĩa, dao dĩa lên bàn.","lay the table – bày bàn (Anh)","clear the table – dọn bàn sau bữa ăn","place setting – bộ đồ ăn cho một chỗ"],
+"be using a sink":["sink = bồn rửa.","wash dishes – rửa bát","rinse – tráng","faucet – vòi nước"],
+"be shopping for groceries":["groceries = thực phẩm, đồ tạp hóa.","grocery store – cửa hàng tạp hóa","aisle – lối đi giữa các kệ","produce section – quầy rau quả"],
+"be eating inside a restaurant":["inside ngược với outside / outdoors. Nghe kỹ địa điểm.","dine – dùng bữa","outdoor seating – chỗ ngồi ngoài trời","diner – thực khách"],
+"be having a meal":["have a meal = eat.","have lunch – ăn trưa","share a meal – ăn cùng nhau","dine – dùng bữa"],
+"be ordering food":["order = gọi món.","menu – thực đơn","server – người phục vụ","take an order – ghi món"],
+"be serving food to the customers":["serve = phục vụ, dọn món.","server – người phục vụ","tray – khay","bring – mang tới"],
+"be pouring water into a glass":["pour = rót.","fill – làm đầy","pitcher – bình","beverage – đồ uống"],
+"be packing some food into the plastic container":["pack = đóng gói.","wrap – gói, bọc","takeaway / take-out – đồ mang đi","lid – nắp"],
+"performance":["perform = biểu diễn.","stage – sân khấu","performer – người biểu diễn","audience – khán giả"],
+"shore":["Bờ biển, bờ hồ.","beach – bãi biển","coast – bờ biển","along the shore – dọc bờ biển"],
+"view":["Quang cảnh; là động từ thì nghĩa là xem.","scenery – phong cảnh","overlook – nhìn xuống","have a view of – nhìn ra"],
+"amusement park":["Công viên giải trí.","ride – trò chơi cảm giác","roller coaster – tàu lượn","theme park – công viên chủ đề"],
+"seashell":["Vỏ sò, vỏ ốc trên bãi biển.","collect – thu thập","sand – cát","beach – bãi biển"],
+"camping gear":["Đồ dùng đi cắm trại. gear không thêm -s.","tent – lều","set up a tent – dựng lều","sleeping bag – túi ngủ"],
+"paddle":["Danh từ là mái chèo; động từ là chèo.","row – chèo thuyền","canoe / kayak – xuồng","oar – mái chèo dài"],
+"deck":["Boong tàu; cũng là sàn gỗ ngoài trời.","dock – bến tàu","pier – cầu tàu","on board – trên tàu"],
+"swing":["Danh từ là xích đu; động từ là đu đưa.","playground – sân chơi","slide – cầu trượt","swing back and forth – đu qua lại"],
+"backpack":["Ba lô.","carry a backpack – đeo ba lô","hiker – người đi bộ đường dài","strap – quai đeo"],
+"be attending a concert":["attend = tham dự (đi xem).","audience – khán giả","applaud – vỗ tay","musician – nhạc công"],
+"be watching a film":["film (Anh) = movie (Mỹ).","movie theater – rạp phim","screen – màn chiếu","audience – khán giả"],
+"be fishing from a boat":["fish (v) = câu cá.","fishing rod – cần câu","be docked – (thuyền) đang neo","dock – bến"],
+"be traveling through the canyon":["travel through = đi qua. canyon = hẻm núi.","valley – thung lũng","cliff – vách đá","hike – đi bộ đường dài"],
+"be playing a game":["play a game = chơi trò chơi, thi đấu.","board game – trò chơi trên bàn","match – trận đấu","player – người chơi"],
+"be kicking a ball into the air":["kick = đá. throw = ném, catch = bắt.","throw – ném","catch – bắt","field – sân"],
+"be packing a suitcase":["pack = xếp đồ vào; unpack = dỡ đồ ra.","unpack – dỡ đồ","zip up – kéo khóa","fold clothes – gấp quần áo"],
+"be screening some luggage":["screen = soi chiếu an ninh ở sân bay.","security check – kiểm tra an ninh","inspect – kiểm tra","X-ray machine – máy soi"],
+"be hiking in the forest":["hike = đi bộ đường dài.","trail – đường mòn","hiker – người đi bộ đường dài","woods – rừng"],
+"be reading a sign near the water":["sign = biển báo. near = gần.","notice – thông báo","post a sign – dán biển","waterfront – khu ven sông, ven biển"]
+};
+const ALT = {"article of food":["groceries"],"heavy equipment":["heavy machinery"],"luggage":["baggage"],"view":["scenery"],"stairs":["stair"]};
+
+const ITEMS = [];
+DATA.forEach(t=>{
+  t.items=[];
+  t.words.forEach(([en,ipa,vi])=>{const it={id:t.id+":"+en,en,ipa,vi,type:"w",topic:t.id};t.items.push(it);ITEMS.push(it)});
+  t.phrases.forEach(([en,ipa,vi])=>{const it={id:t.id+":"+en,en,ipa,vi,type:"p",topic:t.id};t.items.push(it);ITEMS.push(it)});
+});
+/* ---- NEW WORDS ---- */
+const NW_DATA = [
+ {id:"nw-part3", section:"nw", name:"Nhóm từ vựng 3", sub:"Từ mới tự ghi lại khi học", eyebrow:"New words",
+  words:[["avocado","/ˌævəˈkɑːdəʊ/","quả bơ"],["association","/əˌsəʊsiˈeɪʃn/","hiệp hội; mối liên hệ"],["tenant","/ˈtenənt/","người thuê nhà"],["plausible","/ˈplɔːzəbl/","nghe có vẻ hợp lý"],["interstate","/ˌɪntəˈsteɪt/","giữa các bang (Mỹ); đường cao tốc liên bang"],
+   ["medieval","/ˌmediˈiːvl/","thuộc thời Trung cổ"],["circled","/ˈsɜːkld/","đã khoanh tròn; được khoanh tròn"],["audience","/ˈɔːdiəns/","khán giả, người xem/nghe"],["rummaged","/ˈrʌmɪdʒd/","đã lục lọi, lục tìm"],["rated","/ˈreɪtɪd/","đã đánh giá; được đánh giá"],["passengers","/ˈpæsɪndʒəz/","những hành khách"],["widely","/ˈwaɪdli/","rộng rãi, rộng khắp"],["inventory","/ˈɪnvəntri/","hàng tồn kho; việc kiểm kê"],["directly","/dəˈrektli/","trực tiếp; thẳng; ngay lập tức"],["inconvenience","/ˌɪnkənˈviːniəns/","sự bất tiện, phiền toái"]],
+  phrases:[["tenants' association","/ˈtenənts əˌsəʊsiˈeɪʃn/","hội người thuê nhà"],["a lonely stretch","/ə ˈləʊnli stretʃ/","một đoạn (đường) dài vắng vẻ"],["blocked off","/ˌblɒkt ˈɒf/","bị chặn lại, bị phong tỏa"],["full-time staff members","/ˌfʊl ˈtaɪm ˈstɑːf ˈmembəz/","các nhân viên toàn thời gian"],["professional development grant","/prəˈfeʃənl dɪˈveləpmənt ɡrɑːnt/","khoản trợ cấp phát triển chuyên môn"],["hand in","/ˌhænd ˈɪn/","nộp (bài, báo cáo, tài liệu)"],["agency regulates","/ˈeɪdʒənsi ˈreɡjuleɪts/","cơ quan quản lý, điều tiết"],["a sin","/ə sɪn/","một tội lỗi"],["scored the all-important goal","/skɔːd ði ˌɔːl ɪmˈpɔːtnt ɡəʊl/","đã ghi bàn thắng cực kỳ quan trọng"]]}
+];
+const NW_ITEMS=[];
+NW_DATA.forEach(t=>{
+  t.items=[];
+  t.words.forEach(([en,ipa,vi])=>{const it={id:t.id+":"+en,en,ipa,vi,type:"w",topic:t.id};t.items.push(it);NW_ITEMS.push(it)});
+  t.phrases.forEach(([en,ipa,vi])=>{const it={id:t.id+":"+en,en,ipa,vi,type:"p",topic:t.id};t.items.push(it);NW_ITEMS.push(it)});
+});
+Object.assign(NOTES,{
+"avocado":["Đếm được: an avocado, two avocados. Trọng âm rơi vào -ca-: a-vo-CA-do."],
+"association":["Trong TOEIC hay gặp: business association, professional association (hiệp hội nghề nghiệp)."],
+"tenant":["tenant = người thuê, landlord = chủ nhà, rent = tiền thuê. Hay gặp trong thông báo về căn hộ, tòa nhà."],
+"plausible":["Hay đi với reason, explanation: a plausible reason = một lý do nghe hợp lý (nhưng chưa chắc đúng). Khác possible = có thể xảy ra."],
+"interstate":["inter- = giữa. interstate = giữa các bang. Hay gặp khi nói về giao thông ở Mỹ."],
+"tenants' association":["tenant's = của 1 người thuê, tenants' = của nhiều người thuê. Cả hai cách viết đều gặp."],
+"a lonely stretch":["stretch = một đoạn. a stretch of road = một đoạn đường."],
+"blocked off":["be blocked off because of construction = bị chặn vì đang thi công. Gần nghĩa: closed."],
+"full-time staff members":["full-time = toàn thời gian, part-time = bán thời gian. staff member = một nhân viên."],
+"professional development grant":["grant = tiền được cấp cho một việc cụ thể. Khác salary (lương) và loan (khoản vay). apply for a grant = xin trợ cấp."],
+"hand in":["hand in = nộp, hand out = phát cho mọi người. Nói hand it in, không nói hand in it."],
+"medieval":["Phân biệt: medieval = thời Trung cổ, ancient = thời cổ đại, modern = hiện đại."],
+"a sin":["a sin /ə sɪn/ nghe gần giống a sign /ə saɪn/ (biển báo). Nghe kỹ âm /ɪ/ hay /aɪ/!"],
+"circled":["circle = khoanh tròn. Bị động: The answer was circled = đáp án được khoanh tròn."],
+"scored the all-important goal":["score a goal = ghi một bàn thắng. all-important = cực kỳ quan trọng."],
+"audience":["target audience = đối tượng mục tiêu. audience xem chương trình, spectator xem thể thao."],
+"rummaged":["rummage through a bag = lục lọi trong túi. Khác search = tìm kiếm nói chung."],
+"rated":["highly rated = được đánh giá cao. Hay gặp khi nói về khách sạn, nhà hàng."],
+"passengers":["passenger = 1 hành khách, passengers = nhiều hành khách. Khác customer = khách hàng."],
+"widely":["wide = rộng (kích thước), widely = rộng rãi. Hay gặp: widely used, widely available."],
+"inventory":["inventory = hàng tồn kho. take inventory = kiểm kê hàng. Hay gặp ở chủ đề kho, cửa hàng."],
+"directly":["contact someone directly = liên hệ trực tiếp với ai. go directly to = đi thẳng đến."],
+"inconvenience":["Câu rất hay gặp: We apologize for the inconvenience. inconvenient = bất tiện (tính từ)."],
+"agency regulates":["agency = cơ quan. regulate = quản lý bằng quy định. Chủ ngữ số ít nên thêm -s: regulates."]
+});
+const EX = {
+"avocado":["I eat avocado for breakfast.","Tôi ăn bơ vào bữa sáng."],
+"association":["She joined a professional association.","Cô ấy tham gia một hiệp hội nghề nghiệp."],
+"tenant":["The tenant pays rent every month.","Người thuê nhà trả tiền thuê mỗi tháng."],
+"plausible":["He gave a plausible reason for being late.","Anh ấy đưa ra một lý do có vẻ hợp lý cho việc đến muộn."],
+"interstate":["We drove on the interstate.","Chúng tôi lái xe trên đường cao tốc liên bang."],
+"tenants' association":["The tenants' association held a meeting.","Hội người thuê nhà đã tổ chức một cuộc họp."],
+"a lonely stretch":["We drove along a lonely stretch of road.","Chúng tôi lái xe dọc một đoạn đường vắng vẻ."],
+"blocked off":["The road is blocked off.","Con đường đang bị chặn lại."],
+"full-time staff members":["Full-time staff members work five days a week.","Nhân viên toàn thời gian làm việc năm ngày một tuần."],
+"professional development grant":["She applied for a professional development grant.","Cô ấy nộp đơn xin trợ cấp phát triển chuyên môn."],
+"hand in":["Please hand in your report today.","Vui lòng nộp báo cáo hôm nay."],
+"agency regulates":["The agency regulates the industry.","Cơ quan này quản lý ngành công nghiệp đó."],
+"medieval":["Medieval castles are beautiful.","Những lâu đài thời Trung cổ rất đẹp."],
+"a sin":["Lying is a sin.","Nói dối là một tội lỗi."],
+"circled":["I circled the correct answer.","Tôi đã khoanh tròn đáp án đúng."],
+"scored the all-important goal":["He scored the all-important goal.","Anh ấy đã ghi bàn thắng cực kỳ quan trọng."],
+"audience":["The audience enjoyed the show.","Khán giả thích buổi biểu diễn."],
+"rummaged":["He rummaged through his bag to find his keys.","Anh ấy lục lọi trong túi để tìm chìa khóa."],
+"rated":["This hotel is highly rated.","Khách sạn này được đánh giá rất cao."],
+"passengers":["The passengers are waiting for the bus.","Các hành khách đang chờ xe buýt."],
+"widely":["English is widely spoken around the world.","Tiếng Anh được sử dụng rộng rãi trên khắp thế giới."],
+"inventory":["We need to check our inventory.","Chúng tôi cần kiểm tra hàng tồn kho."],
+"directly":["Please contact the manager directly.","Vui lòng liên hệ trực tiếp với người quản lý."],
+"inconvenience":["We apologize for the inconvenience.","Chúng tôi xin lỗi vì sự bất tiện này."]
+};
+Object.assign(ALT,{"a sin":["sin"],"tenants' association":["tenant's association","tenants association"],"agency regulates":["the agency regulates"]});
+const ALL_TOPIC = {id:"all",name:"Ôn trộn tất cả",sub:"Mọi chủ đề tranh tả người",items:ITEMS};
+
+const MODES = [
+ {id:"flash", name:"Flashcard", desc:"Lật thẻ, nghe phát âm, đánh dấu từ đã thuộc", ico:'<rect x="3" y="5" width="14" height="11" rx="2"/><path d="M7 19h12a2 2 0 0 0 2-2V9"/>'},
+ {id:"vi2en", name:"Việt → Anh", desc:"Nhìn nghĩa tiếng Việt, chọn từ tiếng Anh đúng", ico:'<path d="M4 6h16M4 12h10M4 18h7"/><path d="m16 15 3 3 3-6"/>'},
+ {id:"en2vi", name:"Anh → Việt", desc:"Nhìn từ tiếng Anh, chọn nghĩa đúng", ico:'<path d="M4 6h16M4 12h16M4 18h9"/>'},
+ {id:"type", name:"Gõ từ tiếng Anh", desc:"Nhìn tiếng Việt, tự gõ lại từ hoặc cụm từ", ico:'<rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M7 14h10"/>'},
+ {id:"listen", name:"Nghe chọn nghĩa", desc:"Nghe phát âm như trong Part 1, chọn nghĩa đúng", ico:'<path d="M3 14v-2a9 9 0 0 1 18 0v2"/><rect x="3" y="14" width="4" height="6" rx="1"/><rect x="17" y="14" width="4" height="6" rx="1"/>'},
+ {id:"dict", name:"Nghe chép chính tả", desc:"Nghe rồi gõ lại chính xác những gì nghe được", ico:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/>'},
+ {id:"match", name:"Ghép cặp", desc:"Nối 6 từ tiếng Anh với nghĩa tiếng Việt, tính giờ", ico:'<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><path d="M10 6.5h4a3 3 0 0 1 3 3V14"/>'},
+ {id:"scramble", name:"Sắp xếp cụm từ", desc:"Xếp các từ bị xáo trộn thành cụm mô tả đúng", ico:'<path d="M16 3h5v5M4 20 21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/>', phrasesOnly:true}
+];
+
+/* ===================== LƯU TRỮ ===================== */
+const KEY="toeic-p1-vocab-v1";
+let store=(()=>{try{return JSON.parse(localStorage.getItem(KEY))||{}}catch(e){return {}}})();
+store.known=store.known||{}; store.best=store.best||{}; store.filter=store.filter||"all";
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+
+/* ===================== TIỆN ÍCH ===================== */
+const $=s=>document.querySelector(s);
+const app=$("#app");
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const norm=s=>s.toLowerCase().replace(/\(.*?\)/g," ").replace(/[’‘`]/g,"'").replace(/[^a-z' ]/g," ").replace(/\s+/g," ").trim();
+const stripBe=s=>s.replace(/^be /,"");
+function accepts(item){const list=[item.en,...(ALT[item.en]||[])];const out=new Set();list.forEach(x=>{out.add(norm(x));out.add(stripBe(norm(x)))});return out}
+function isRight(item,input){const n=norm(input);return n&&(accepts(item).has(n)||accepts(item).has(stripBe(n)))}
+const SPK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg>';
+const VOC = {
+"sign":"/saɪn/","notebook computer":"/ˈnəʊtbʊk kəmˈpjuːtə(r)/","painting a wall":"/ˈpeɪntɪŋ ə wɔːl/","papers":"/ˈpeɪpəz/","documents":"/ˈdɒkjumənts/","article":"/ˈɑːtɪkl/","groceries":"/ˈɡrəʊsəriz/",
+"look at":"/lʊk æt/","look in":"/lʊk ɪn/","cleaning the window":"/ˈkliːnɪŋ ðə ˈwɪndəʊ/","examine":"/ɪɡˈzæmɪn/","face":"/feɪs/","gaze":"/ɡeɪz/","hung on a wall":"/hʌŋ ɒn ə wɔːl/","gaze out at":"/ɡeɪz aʊt æt/",
+"focus on":"/ˈfəʊkəs ɒn/","watch":"/wɒtʃ/","view":"/vjuː/","shadow":"/ˈʃædəʊ/","side":"/saɪd/","rock":"/rɒk/","step":"/step/","around":"/əˈraʊnd/","sitting on a bench":"/ˈsɪtɪŋ ɒn ə bentʃ/","side by side":"/ˌsaɪd baɪ ˈsaɪd/",
+"behind":"/bɪˈhaɪnd/","walk up":"/wɔːk ʌp/","walk down":"/wɔːk daʊn/","up":"/ʌp/","down":"/daʊn/","stroll":"/strəʊl/","along":"/əˈlɒŋ/","by":"/baɪ/","lean on":"/liːn ɒn/","against":"/əˈɡenst/","ride":"/raɪd/","bicycle":"/ˈbaɪsɪkl/","bike":"/baɪk/","horse":"/hɔːs/","repairing a bicycle":"/rɪˈpeərɪŋ ə ˈbaɪsɪkl/",
+"board":"/bɔːd/","get into":"/ɡet ˈɪntə/","get out of":"/ɡet aʊt əv/","exit":"/ˈeksɪt/","disembark":"/ˌdɪsɪmˈbɑːk/","copier":"/ˈkɒpiə(r)/","copy machine":"/ˈkɒpi məˈʃiːn/","pushchair":"/ˈpʊʃtʃeə(r)/","pram":"/præm/",
+"deliver":"/dɪˈlɪvə(r)/","carry":"/ˈkæri/","hold up":"/həʊld ʌp/","with both hands":"/wɪð bəʊθ hændz/","with one hand":"/wɪð wʌn hænd/","lift":"/lɪft/","off the floor":"/ɒf ðə flɔː(r)/","reach for":"/riːtʃ fɔː(r)/","press a button":"/pres ə ˈbʌtn/",
+"cart":"/kɑːt/","trolley":"/ˈtrɒli/","point at":"/pɔɪnt æt/","place":"/pleɪs/","put":"/pʊt/","take from":"/teɪk frɒm/","put back":"/pʊt bæk/","turn the page":"/tɜːn ðə peɪdʒ/","throw away":"/θrəʊ əˈweɪ/","garbage":"/ˈɡɑːbɪdʒ/","rubbish":"/ˈrʌbɪʃ/",
+"unfold":"/ʌnˈfəʊld/","fold":"/fəʊld/","file":"/faɪl/","at a desk":"/æt ə desk/","handle":"/ˈhændl/","arrange":"/əˈreɪndʒ/","be arranged":"/bi əˈreɪndʒd/","organize":"/ˈɔːɡənaɪz/","operate":"/ˈɒpəreɪt/","type":"/taɪp/","signature":"/ˈsɪɡnətʃə(r)/",
+"mail":"/meɪl/","post":"/pəʊst/","have a discussion":"/hæv ə dɪˈskʌʃn/","discuss":"/dɪˈskʌs/","equipment":"/ɪˈkwɪpmənt/","safety glasses":"/ˈseɪfti ˈɡlɑːsɪz/","goggles":"/ˈɡɒɡlz/","gear":"/ɡɪə(r)/","hard hat":"/ˌhɑːd ˈhæt/","wire":"/ˈwaɪə(r)/",
+"construction site":"/kənˈstrʌkʃn saɪt/","work on":"/wɜːk ɒn/","at a table":"/æt ə ˈteɪbl/","inspect":"/ɪnˈspekt/","build":"/bɪld/","lay":"/leɪ/","lie":"/laɪ/","paint":"/peɪnt/","painting":"/ˈpeɪntɪŋ/","shovel":"/ˈʃʌvl/","dig":"/dɪɡ/",
+"take a measurement":"/teɪk ə ˈmeʒəmənt/","measure":"/ˈmeʒə(r)/","pile":"/paɪl/","be piled up":"/bi paɪld ʌp/","sweep":"/swiːp/","water":"/ˈwɔːtə(r)/","trim":"/trɪm/","take care of":"/teɪk keər əv/","look after":"/lʊk ˈɑːftə(r)/",
+"pick":"/pɪk/","pick up":"/pɪk ʌp/","mop":"/mɒp/","rake":"/reɪk/","cut grass":"/kʌt ɡrɑːs/","mow the lawn":"/məʊ ðə lɔːn/","empty":"/ˈempti/","full":"/fʊl/","ladder":"/ˈlædə(r)/","stairs":"/steəz/","transport":"/trænˈspɔːt/",
+"flower pot":"/ˈflaʊə pɒt/","jug":"/dʒʌɡ/","tap":"/tæp/","bakery":"/ˈbeɪkəri/","cook":"/kʊk/","chop":"/tʃɒp/","wear":"/weə(r)/","put on":"/pʊt ɒn/","set the table":"/set ðə ˈteɪbl/","sink":"/sɪŋk/",
+"inside":"/ˌɪnˈsaɪd/","outside":"/ˌaʊtˈsaɪd/","outdoors":"/ˌaʊtˈdɔːz/","have a meal":"/hæv ə miːl/","eat":"/iːt/","order":"/ˈɔːdə(r)/","serve":"/sɜːv/","pour":"/pɔː(r)/","pack":"/pæk/","unpack":"/ʌnˈpæk/",
+"perform":"/pəˈfɔːm/","attend":"/əˈtend/","film":"/fɪlm/","movie":"/ˈmuːvi/","fish":"/fɪʃ/","travel through":"/ˈtrævl θruː/","canyon":"/ˈkænjən/","play a game":"/pleɪ ə ɡeɪm/","kick":"/kɪk/","throw":"/θrəʊ/","catch":"/kætʃ/",
+"screen":"/skriːn/","hike":"/haɪk/","near":"/nɪə(r)/","avocados":"/ˌævəˈkɑːdəʊz/","an avocado":"/ən ˌævəˈkɑːdəʊ/","business association":"/ˈbɪznəs əˌsəʊsiˈeɪʃn/","professional association":"/prəˈfeʃənl əˌsəʊsiˈeɪʃn/",
+"tenant":"/ˈtenənt/","landlord":"/ˈlændlɔːd/","rent":"/rent/","reason":"/ˈriːzn/","explanation":"/ˌekspləˈneɪʃn/","a plausible reason":"/ə ˈplɔːzəbl ˈriːzn/","interstate":"/ˌɪntəˈsteɪt/",
+"tenant's":"/ˈtenənts/","tenants'":"/ˈtenənts/","stretch":"/stretʃ/","a stretch of road":"/ə stretʃ əv rəʊd/","be blocked off because of construction":"/bi ˌblɒkt ˈɒf bɪˈkɒz əv kənˈstrʌkʃn/","closed":"/kləʊzd/",
+"full-time":"/ˌfʊl ˈtaɪm/","part-time":"/ˌpɑːt ˈtaɪm/","staff member":"/ˈstɑːf ˌmembə(r)/","grant":"/ɡrɑːnt/","salary":"/ˈsæləri/","loan":"/ləʊn/","apply for a grant":"/əˈplaɪ fər ə ɡrɑːnt/",
+"hand in":"/ˌhænd ˈɪn/","hand out":"/ˌhænd ˈaʊt/","hand it in":"/ˌhænd ɪt ˈɪn/","hand in it":"/ˌhænd ɪn ɪt/","agency":"/ˈeɪdʒənsi/","regulate":"/ˈreɡjuleɪt/","regulates":"/ˈreɡjuleɪts/",
+"ancient":"/ˈeɪnʃənt/","modern":"/ˈmɒdn/","a sign":"/ə saɪn/","circle":"/ˈsɜːkl/","the answer was circled":"/ði ˈɑːnsə wəz ˈsɜːkld/",
+"score a goal":"/skɔːr ə ɡəʊl/","all-important":"/ˌɔːl ɪmˈpɔːtnt/","target audience":"/ˈtɑːɡɪt ˈɔːdiəns/","audience":"/ˈɔːdiəns/","spectator":"/spekˈteɪtə(r)/",
+"rummage through a bag":"/ˈrʌmɪdʒ θruː ə bæɡ/","search":"/sɜːtʃ/","highly rated":"/ˌhaɪli ˈreɪtɪd/","passenger":"/ˈpæsɪndʒə(r)/","passengers":"/ˈpæsɪndʒəz/","customer":"/ˈkʌstəmə(r)/",
+"wide":"/waɪd/","widely":"/ˈwaɪdli/","widely used":"/ˌwaɪdli ˈjuːzd/","widely available":"/ˌwaɪdli əˈveɪləbl/","inventory":"/ˈɪnvəntri/","take inventory":"/teɪk ˈɪnvəntri/",
+"contact someone directly":"/ˈkɒntækt ˈsʌmwʌn dəˈrektli/","go directly to":"/ɡəʊ dəˈrektli tə/","we apologize for the inconvenience":"/wi əˈpɒlədʒaɪz fə ði ˌɪnkənˈviːniəns/",
+"inconvenient":"/ˌɪnkənˈviːniənt/","possible":"/ˈpɒsəbl/",
+"merchandise":"/ˈmɜːtʃəndaɪs/","luggage":"/ˈlʌɡɪdʒ/","scenery":"/ˈsiːnəri/","cupboard":"/ˈkʌbəd/"
+};
+const VOC_RE=new RegExp("(?<![\\p{L}'-])("+Object.keys(VOC).sort((a,b)=>b.length-a.length).map(k=>k.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).join("|")+")(?![\\p{L}'-])","giu");
+function tipHTML(tip,head){
+  const found=[];let out="",last=0;
+  tip.replace(VOC_RE,(m,g,off)=>{
+    out+=esc(tip.slice(last,off));
+    out+=`<button class="tw" data-say="${esc(m)}" title="Nghe">${esc(m)}</button>`;
+    last=off+m.length;
+    const k=m.toLowerCase();
+    if(k!==head.toLowerCase()&&!found.includes(k))found.push(k);
+    return m;
+  });
+  out+=esc(tip.slice(last));
+  return {html:out,found};
+}
+function noteHTML(it,open){
+  const n=NOTES[it.en];if(!n)return "";
+  const ex=EX[it.en];const T=tipHTML(n[0],it.en);
+  return `<div class="note" ${open===false?"hidden":""}><div class="note-h"><span class="note-ic">i</span>Mẹo nhớ</div><p class="note-tip">${T.html}</p>${T.found.length?`<div class="tvoc">${T.found.map(k=>`<button class="tv" data-say="${esc(k)}"><span class="tv-ic">${SPK}</span><b>${esc(k)}</b><span class="tv-ipa">${esc(VOC[k])}</span></button>`).join("")}</div>`:""}${ex?`<div class="note-ex"><button class="spk sm" data-say="${esc(ex[0])}" aria-label="Nghe câu ví dụ">${SPK}</button><div><div class="ex-en">${esc(ex[0])}</div><div class="ex-vi">${esc(ex[1])}</div></div></div>`:""}</div>`;
+}
+let toastT;
+function toast(m){const t=$("#toast");t.textContent=m;t.hidden=false;clearTimeout(toastT);toastT=setTimeout(()=>t.hidden=true,2200)}
+
+let slow=false;
+/* Phát âm: chỉ 1 giọng đọc tại một thời điểm, không phát trùng */
+let VOICE=null,speakTimer=null,lastSay={t:"",at:0},curUtter=null;
+function engVoices(){try{return speechSynthesis.getVoices().filter(v=>/^en/i.test(v.lang))}catch(e){return []}}
+function pickVoice(){
+  try{
+    const vs=engVoices();if(!vs.length)return;
+    const want=store.voice&&vs.find(v=>v.name===store.voice);
+    const gb=vs.filter(v=>/en[-_]GB/i.test(v.lang));
+    VOICE=want||gb.find(v=>v.localService)||gb[0]||vs.find(v=>v.localService)||vs[0]||null;
+    const sel=document.getElementById("voicesel");
+    if(sel){
+      const sorted=[...gb,...vs.filter(v=>!gb.includes(v))];
+      sel.innerHTML='<option value="">Tự động</option>'+sorted.map(v=>`<option value="${esc(v.name)}"${store.voice===v.name?" selected":""}>${esc(v.name.replace(/^Microsoft |Google /,"").replace(/ Online \(Natural\)/," (Natural)"))} · ${esc(v.lang)}${v.localService?"":" · mạng"}</option>`).join("");
+    }
+  }catch(e){}
+}
+try{pickVoice();speechSynthesis.onvoiceschanged=pickVoice}catch(e){}
+function speak(text){
+  try{
+    if(!("speechSynthesis" in window)){toast("Trình duyệt này chưa hỗ trợ phát âm.");return}
+    const t=String(text).replace(/\(.*?\)/g,"").trim();if(!t)return;
+    const now=Date.now();
+    if(t===lastSay.t&&now-lastSay.at<700)return;   /* chặn gọi trùng trong 0,7 giây */
+    lastSay={t,at:now};
+    clearTimeout(speakTimer);
+    const ss=speechSynthesis;
+    const busy=ss.speaking||ss.pending;
+    if(busy)ss.cancel();
+    if(!VOICE)pickVoice();
+    speakTimer=setTimeout(()=>{
+      const u=new SpeechSynthesisUtterance(t);
+      if(VOICE)u.voice=VOICE;
+      u.lang=VOICE?VOICE.lang:"en-GB";u.rate=slow?0.6:0.92;
+      curUtter=u;               /* giữ tham chiếu để trình duyệt không phát lại */
+      ss.speak(u);
+    },busy?150:20);
+  }catch(e){toast("Không phát được âm thanh.")}
+}
+function stopSpeak(){try{clearTimeout(speakTimer);speechSynthesis.cancel()}catch(e){}}
+
+/* ===================== ĐIỀU HƯỚNG ===================== */
+let S={view:"home",topic:null,mode:null};
+let sess=null;
+function topicById(id){return id==="all"?ALL_TOPIC:(DATA.find(t=>t.id===id)||NW_DATA.find(t=>t.id===id))}
+function poolOf(topic,mode){
+  let items=topic.items;
+  const m=MODES.find(x=>x.id===mode);
+  if(m&&m.phrasesOnly) return items.filter(i=>i.type==="p");
+  if(store.filter==="w") items=items.filter(i=>i.type==="w");
+  if(store.filter==="p") items=items.filter(i=>i.type==="p");
+  return items;
+}
+function go(view,opts={}){
+  stopSpeak();
+  S={...S,view,...opts};
+  render(); window.scrollTo({top:0});
+}
+function crumbs(){
+  const c=[["home","Trang chủ"]];
+  const tp=S.topic&&["topic","mode"].includes(S.view)?topicById(S.topic):null;
+  const isNW=S.view==="newwords"||(tp&&tp.section==="nw");
+  if(isNW){c.push(["newwords","New words"])}
+  else{
+  if(S.view!=="home"){c.push(["listening","Listening"])}
+  if(["part1","topic","mode"].includes(S.view)){c.push(["part1","Part 1 · Tranh tả người"])}
+  }
+  if(["topic","mode"].includes(S.view)){c.push(["topic",topicById(S.topic).name])}
+  if(S.view==="mode"){c.push(["mode",MODES.find(m=>m.id===S.mode).name])}
+  $("#crumbs").innerHTML=c.map((x,i)=>i===c.length-1?`<span class="cur">${esc(x[1])}</span>`:`<button data-go="${x[0]}">${esc(x[1])}</button><span class="sep">›</span>`).join("");
+}
+function render(){
+  crumbs();
+  if(S.view==="home")return renderHome();
+  if(S.view==="listening")return renderListening();
+  if(S.view==="newwords")return renderNewWords();
+  if(S.view==="part1")return renderPart1();
+  if(S.view==="topic")return renderTopic();
+  if(S.view==="mode")return startMode(S.mode);
+}
+
+/* ===================== TRANG ===================== */
+function knownCount(items){return items.filter(i=>store.known[i.id]).length}
+function renderHome(){
+  const k=knownCount(ITEMS);
+  app.innerHTML=`
+  <div><p class="eyebrow">Tự học TOEIC</p><h1>Sổ từ vựng của bạn</h1>
+  <p class="lead">Chọn kỹ năng để ôn. Tiến độ được lưu lại trên trình duyệt này, lần sau mở ra vẫn còn.</p></div>
+  <div class="grid">
+    <button class="card" data-go="listening">
+      <span class="pill">Đang học</span><h2>Listening</h2>
+      <span class="meta">Part 1 · ${ITEMS.length} từ và cụm từ · đã thuộc ${k}</span>
+      <div class="bar"><i style="width:${ITEMS.length?k/ITEMS.length*100:0}%"></i></div>
+    </button>
+    <button class="card nw-card" data-go="newwords">
+      <span class="pill nw">Từ mới của bạn</span><h2>New words</h2>
+      <span class="meta">${NW_DATA.length} nhóm · ${NW_ITEMS.length} từ và cụm từ · đã thuộc ${knownCount(NW_ITEMS)}</span>
+      <div class="bar"><i style="width:${NW_ITEMS.length?knownCount(NW_ITEMS)/NW_ITEMS.length*100:0}%"></i></div>
+    </button>
+    <div class="card soon"><span class="pill grey">Sắp có</span><h2>Reading</h2><span class="meta">Part 5, 6, 7</span></div>
+  </div>`;
+}
+function renderNewWords(){
+  app.innerHTML=`
+  <div><p class="eyebrow">Sổ tay</p><h1>New words</h1>
+  <p class="lead">Từ mới bạn tự ghi lại, chia theo từng nhóm. Mỗi nhóm có đủ các dạng ôn: flashcard, trắc nghiệm, nghe, gõ từ, ghép cặp.</p></div>
+  <div class="grid">${NW_DATA.map(topicCard).join("")}</div>`;
+}
+function renderListening(){
+  app.innerHTML=`
+  <div><p class="eyebrow">Kỹ năng</p><h1>Listening</h1><p class="lead">Từ vựng theo từng Part của đề thi nghe TOEIC.</p></div>
+  <div class="grid">
+    <button class="card" data-go="part1"><span class="pill">${DATA.length} chủ đề</span><h2>Part 1 · Mô tả tranh</h2><span class="meta">Tranh tả người: hành động, tư thế, nơi chốn</span></button>
+    <div class="card soon"><span class="pill grey">Sắp có</span><h2>Part 2 · Hỏi đáp</h2><span class="meta">Câu hỏi – phản hồi</span></div>
+    <div class="card soon"><span class="pill grey">Sắp có</span><h2>Part 3 · Hội thoại</h2><span class="meta">Hội thoại ngắn</span></div>
+    <div class="card soon"><span class="pill grey">Sắp có</span><h2>Part 4 · Bài nói</h2><span class="meta">Thông báo, bài nói ngắn</span></div>
+  </div>`;
+}
+function topicCard(t){
+  const k=knownCount(t.items),n=t.items.length;
+  const bests=MODES.map(m=>store.best[t.id+"|"+m.id]).filter(x=>x!=null);
+  const bestTxt=bests.length?` · điểm cao nhất ${Math.max(...bests)}%`:"";
+  return `<button class="card" data-topic="${t.id}">
+    <h3>${esc(t.name)}</h3><span class="meta">${esc(t.sub)}</span>
+    <span class="meta">${t.id==="all"?n+" mục":(t.words.length+" từ · "+t.phrases.length+" cụm từ")}${bestTxt}</span>
+    <div class="bar" title="Đã thuộc ${k}/${n}"><i style="width:${n?k/n*100:0}%"></i></div>
+    <span class="meta" style="font-size:12px">Đã thuộc ${k}/${n}</span></button>`;
+}
+function renderPart1(){
+  app.innerHTML=`
+  <div><p class="eyebrow">Listening · Part 1</p><h1>Tranh tả người</h1>
+  <p class="lead">Part 1 thường mô tả người đang làm gì: <b>be + V-ing</b>. Học chắc cụm động từ trong từng chủ đề, khi nghe sẽ loại đáp án nhanh hơn.</p></div>
+  <section class="section"><div class="grid">${DATA.map(topicCard).join("")}${topicCard(ALL_TOPIC)}</div></section>
+  <section class="section"><h2>Chủ đề khác của Part 1</h2>
+  <div class="grid"><div class="card soon"><span class="pill grey">Sắp có</span><h3>Tranh tả vật & cảnh</h3><span class="meta">Câu bị động: be placed, have been stacked…</span></div></div></section>`;
+}
+function modeIcon(m){return `<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${m.ico}</svg></span>`}
+function renderTopic(){
+  const t=topicById(S.topic);
+  const f=store.filter;
+  const list=t.items;
+  app.innerHTML=`
+  <div class="hero">
+    <div><p class="eyebrow">${esc(t.eyebrow||"Tranh tả người")}</p><h1>${esc(t.name)}</h1><p class="lead">${esc(t.sub)} · ${list.length} mục · đã thuộc ${knownCount(list)}</p></div>
+    <div class="row"><span class="muted" style="font-size:13px">Ôn phần:</span>
+      <div class="seg" role="group" aria-label="Chọn phần ôn">
+        <button data-filter="all" aria-pressed="${f==="all"}">Tất cả</button>
+        <button data-filter="w" aria-pressed="${f==="w"}">Từ đơn</button>
+        <button data-filter="p" aria-pressed="${f==="p"}">Cụm động từ</button>
+      </div></div>
+  </div>
+  <section class="section"><h2>Chọn cách ôn</h2>
+  <div class="grid">${MODES.map(m=>{const b=store.best[t.id+"|"+m.id];
+    return `<button class="card mode" data-mode="${m.id}"><h3>${modeIcon(m)}${esc(m.name)}</h3><span class="meta">${esc(m.desc)}</span>
+    <span class="tag">${m.phrasesOnly?"Chỉ dùng cụm từ · ":""}${b!=null?"Cao nhất: "+b+(m.id==="match"?" giây":"%"):(m.id==="flash"?"Đã thuộc "+knownCount(list)+"/"+list.length:"Chưa làm")}</span></button>`}).join("")}</div></section>
+  <section class="section"><div class="row" style="justify-content:space-between"><h2>Danh sách từ</h2>
+  <label class="row muted" style="font-size:13px"><input type="checkbox" id="slowchk" ${slow?"checked":""}> Đọc chậm</label></div>
+  <div class="vlist">${list.map(i=>`<div class="vrow ${store.known[i.id]?"known":""}"><button class="spk" data-say="${esc(i.en)}" aria-label="Nghe ${esc(i.en)}">${SPK}</button>
+  <div style="min-width:0"><div><span class="en">${esc(i.en)}</span>${i.ipa?`<span class="ipa">${esc(i.ipa)}</span>`:""}</div><div class="vi">${esc(i.vi)}</div>${NOTES[i.en]?`<details class="vd"><summary>Mẹo nhớ</summary>${noteHTML(i)}</details>`:""}</div></div>`).join("")}</div></section>`;
+}
+
+/* ===================== CÁC DẠNG BÀI ===================== */
+function header(i,n,extra=""){
+  return `<div class="progress"><span>${i+1}/${n}</span><div class="bar"><i style="width:${(i)/n*100}%"></i></div>${extra}</div>`;
+}
+function startMode(mode,customPool){
+  const t=topicById(S.topic);
+  let pool=customPool||poolOf(t,mode);
+  if(!pool.length){app.innerHTML=`<div class="stage"><div class="q"><p>Phần này chưa có mục nào để ôn.</p><button class="btn" data-go="topic">Quay lại</button></div></div>`;return}
+  if(mode==="flash")return flashStart(pool);
+  if(mode==="match")return matchStart(pool);
+  if(mode==="scramble")return scrStart(pool);
+  const q=shuffle(pool).slice(0,Math.min(customPool?pool.length:12,pool.length));
+  sess={mode,queue:q,i:0,correct:0,wrong:[],done:false};
+  if(mode==="type"||mode==="dict")return inpRender();
+  return mcqRender();
+}
+
+/* --- Trắc nghiệm --- */
+function distractors(q,field){
+  const t=topicById(S.topic);
+  const seen=new Set([q[field]]);const out=[];
+  const SEC=t.section==="nw"?NW_ITEMS:ITEMS;const pools=[t.items.filter(x=>x.type===q.type),SEC.filter(x=>x.type===q.type),SEC,ITEMS];
+  for(const p of pools){for(const x of shuffle(p)){if(out.length>=3)break;if(!seen.has(x[field])){seen.add(x[field]);out.push(x)}}}
+  return out;
+}
+function mcqRender(){
+  const q=sess.queue[sess.i];
+  const field=sess.mode==="vi2en"?"en":"vi";
+  if(!sess.opts) sess.opts=shuffle([q,...distractors(q,field)]);
+  let prompt="";
+  if(sess.mode==="vi2en") prompt=`<span class="label">Từ tiếng Anh nào có nghĩa</span><div class="big">${esc(q.vi)}</div>`;
+  if(sess.mode==="en2vi") prompt=`<span class="label">Nghĩa của</span><div class="big">${esc(q.en)}</div>${q.ipa?`<span class="hint">${esc(q.ipa)}</span>`:""}<button class="spk" data-say="${esc(q.en)}" aria-label="Nghe">${SPK}</button>`;
+  if(sess.mode==="listen") prompt=`<span class="label">Nghe và chọn nghĩa đúng</span><button class="btn primary" data-say="${esc(q.en)}">${SPK} Nghe lại</button>`;
+  app.innerHTML=`<div class="stage">${header(sess.i,sess.queue.length,`<span>Đúng ${sess.correct}</span>`)}
+  <div class="q">${prompt}</div>
+  <div class="opts">${sess.opts.map((o,k)=>`<button class="opt" data-opt="${k}"><span class="k">${k+1}</span><span>${esc(o[field])}</span></button>`).join("")}</div>
+  <div id="fb"></div><p class="kbd">Phím tắt: 1–4 để chọn, Enter để sang câu tiếp.</p></div>`;
+  if(sess.mode==="listen") setTimeout(()=>speak(q.en),250);
+}
+function mcqAnswer(k){
+  if(sess.answered)return;
+  sess.answered=true;
+  const q=sess.queue[sess.i];const pick=sess.opts[k];const ok=pick===q;
+  if(ok)sess.correct++;else sess.wrong.push(q);
+  document.querySelectorAll(".opt").forEach((b,j)=>{b.disabled=true;if(sess.opts[j]===q)b.classList.add("right");else if(j===k)b.classList.add("wrong")});
+  $("#fb").innerHTML=`<div class="fb ${ok?"ok":"no"}">${ok?"Chính xác!":"Chưa đúng."} <b>${esc(q.en)}</b> = ${esc(q.vi)}
+  <button class="spk" data-say="${esc(q.en)}" aria-label="Nghe">${SPK}</button><span style="flex:1"></span><button class="btn primary" data-act="next">Câu tiếp</button></div>${noteHTML(q)}`;
+  if(sess.mode!=="listen") speak(q.en);
+  $('[data-act="next"]').focus();
+}
+function next(){
+  sess.i++;sess.answered=false;sess.opts=null;
+  if(sess.i>=sess.queue.length)return result();
+  (sess.mode==="type"||sess.mode==="dict")?inpRender():mcqRender();
+}
+
+/* --- Gõ từ / chính tả --- */
+function hintOf(en){return en.split(" ").map(w=>w[0]+w.slice(1).replace(/[a-z]/gi,"_")).join("  ")}
+function inpRender(){
+  const q=sess.queue[sess.i];
+  const prompt=sess.mode==="type"
+    ?`<span class="label">Gõ tiếng Anh cho</span><div class="big">${esc(q.vi)}</div><span class="hint" id="hint" hidden>${esc(hintOf(q.en))}</span>`
+    :`<span class="label">Nghe và gõ lại</span><button class="btn primary" data-say="${esc(q.en)}">${SPK} Nghe lại</button><span class="hint" id="hint" hidden>${esc(hintOf(q.en))}</span>`;
+  app.innerHTML=`<div class="stage">${header(sess.i,sess.queue.length,`<span>Đúng ${sess.correct}</span>`)}
+  <div class="q">${prompt}</div>
+  <form id="inpform" autocomplete="off"><input class="inp" id="ans" placeholder="${q.type==="p"?"Có thể bỏ “be” ở đầu":"Nhập từ tiếng Anh"}" autocapitalize="off" spellcheck="false"></form>
+  <div class="row"><button class="btn primary" data-act="check">Kiểm tra</button><button class="btn" data-act="hint">Gợi ý</button><button class="btn" data-act="skip">Bỏ qua</button></div>
+  <div id="fb"></div></div>`;
+  $("#ans").focus();
+  if(sess.mode==="dict") setTimeout(()=>speak(q.en),250);
+}
+function inpCheck(skip){
+  if(sess.answered){next();return}
+  const q=sess.queue[sess.i];const v=$("#ans").value;
+  if(!skip&&!v.trim()){$("#ans").focus();return}
+  sess.answered=true;
+  const ok=!skip&&isRight(q,v);
+  if(ok)sess.correct++;else sess.wrong.push(q);
+  $("#ans").classList.add(ok?"right":"wrong");$("#ans").readOnly=true;
+  $("#fb").innerHTML=`<div class="fb ${ok?"ok":"no"}">${ok?"Chính xác!":"Đáp án:"} <b>${esc(q.en)}</b> ${q.ipa?`<span class="hint">${esc(q.ipa)}</span>`:""} · ${esc(q.vi)}
+  <button class="spk" data-say="${esc(q.en)}" aria-label="Nghe">${SPK}</button><span style="flex:1"></span><button class="btn primary" data-act="next">Câu tiếp</button></div>${noteHTML(q)}`;
+  speak(q.en);
+}
+
+/* --- Kết quả --- */
+function saveBest(mode,val,lowerBetter){
+  const k=S.topic+"|"+mode;const old=store.best[k];
+  if(old==null||(lowerBetter?val<old:val>old)){store.best[k]=val;save();return true}return false;
+}
+function result(){
+  const n=sess.queue.length,pct=Math.round(sess.correct/n*100);
+  const rec=saveBest(sess.mode,pct);
+  const msg=pct===100?"Hoàn hảo! Bạn nắm rất chắc phần này.":pct>=80?"Rất tốt, chỉ còn vài mục cần ôn lại.":pct>=50?"Khá ổn. Ôn lại các câu sai rồi làm thêm một lượt nhé.":"Hãy xem lại Flashcard rồi quay lại làm bài.";
+  app.innerHTML=`<div class="stage"><div class="q"><span class="label">Kết quả</span><div class="score">${pct}%</div>
+  <p style="margin:0">${sess.correct}/${n} câu đúng${rec?" · <b style=\"color:var(--accent)\">Kỷ lục mới!</b>":""}</p><p class="muted" style="margin:0">${msg}</p>
+  <div class="row" style="justify-content:center">${sess.wrong.length?`<button class="btn primary" data-act="retrywrong">Ôn lại ${sess.wrong.length} câu sai</button>`:""}
+  <button class="btn ${sess.wrong.length?"":"primary"}" data-act="again">Làm lượt mới</button><button class="btn" data-go="topic">Chọn cách ôn khác</button></div></div>
+  ${sess.wrong.length?`<h3>Cần ôn lại</h3><div class="vlist">${sess.wrong.map(i=>`<div class="vrow"><button class="spk" data-say="${esc(i.en)}" aria-label="Nghe">${SPK}</button><div style="min-width:0"><div><span class="en">${esc(i.en)}</span>${i.ipa?`<span class="ipa">${esc(i.ipa)}</span>`:""}</div><div class="vi">${esc(i.vi)}</div></div></div>`).join("")}</div>`:""}</div>`;
+}
+
+/* --- Flashcard --- */
+let fc=null;
+function flashStart(pool){fc={base:pool.slice(),list:pool.slice(),i:0,flip:false,front:fc?fc.front:"en",got:{},miss:{},end:false};fcRender()}
+function ipaTag(it){return it.ipa?`<div class="ipa"><span class="uk">UK</span>${esc(it.ipa)}</div>`:""}
+function fcRender(){
+  if(fc.end)return fcEnd();
+  const it=fc.list[fc.i];const known=!!store.known[it.id];
+  const en=`<span class="typ pill ${it.type==="w"?"":"grey"}">${it.type==="w"?"Từ":"Cụm từ"}</span><div class="w">${esc(it.en)}</div>${ipaTag(it)}`;
+  const vi=`<div class="w">${esc(it.vi)}</div>`;
+  const front=fc.front==="en"?en:vi;
+  const back=fc.front==="en"?vi+`<div class="sub-en">${esc(it.en)}</div>${ipaTag(it)}`:en+`<div class="vi-sm">${esc(it.vi)}</div>`;
+  const nGot=Object.keys(fc.got).length,nMiss=Object.keys(fc.miss).length;
+  const state=fc.got[it.id]?'<span class="pill">Đã thuộc</span>':fc.miss[it.id]?'<span class="pill bad">Chưa thuộc</span>':(known?'<span class="pill">Đã thuộc từ trước</span>':'');
+  app.innerHTML=`<div class="stage">
+  <div class="progress"><span>${fc.i+1}/${fc.list.length}</span><div class="bar"><i style="width:${(fc.i+1)/fc.list.length*100}%"></i></div><span class="good-t">Thuộc ${nGot}</span><span class="bad-t">Chưa ${nMiss}</span></div>
+  <div class="row" style="justify-content:space-between">
+    <div class="seg"><button data-act="front-en" aria-pressed="${fc.front==="en"}">Mặt trước: Anh</button><button data-act="front-vi" aria-pressed="${fc.front==="vi"}">Mặt trước: Việt</button></div>
+    <div class="row"><button class="btn" data-act="fc-shuffle">Xáo thẻ</button></div>
+  </div>
+  <button class="fc ${fc.flip?"flip":""}" data-act="flip" aria-label="Lật thẻ"><div class="fc-in">
+    <div class="face"><span class="st">${state}</span>${front}<span class="tap">Chạm để lật thẻ</span></div>
+    <div class="face back"><span class="st">${state}</span>${back}</div></div></button>
+  <div id="fcnote">${noteHTML(it,fc.flip)}</div>
+  <div class="judge">
+    <button class="btn miss" data-act="fc-miss">✗ Chưa thuộc</button>
+    <button class="spk" data-say="${esc(it.en)}" aria-label="Nghe phát âm" style="width:46px;height:46px">${SPK}</button>
+    <button class="btn primary" data-act="fc-got">✓ Đã thuộc</button>
+  </div>
+  <div class="row" style="justify-content:center">
+    <button class="btn" data-act="fc-prev" ${fc.i===0?"disabled":""}>← Thẻ trước</button>
+    <button class="btn" data-act="fc-next">${fc.i===fc.list.length-1?"Kết thúc":"Bỏ qua →"}</button>
+  </div>
+  <p class="kbd" style="text-align:center">Phím tắt: Space lật thẻ · S nghe · K đã thuộc · J chưa thuộc · ← → chuyển thẻ</p></div>`;
+  if(fc.front==="en"&&!fc.flip) speak(it.en);
+}
+function fcMark(got){
+  const it=fc.list[fc.i];
+  if(got){fc.got[it.id]=1;delete fc.miss[it.id];store.known[it.id]=true}
+  else{fc.miss[it.id]=1;delete fc.got[it.id];delete store.known[it.id]}
+  save();fcMove(1);
+}
+function fcMove(d){
+  const n=fc.i+d;
+  if(n<0)return;
+  if(n>=fc.list.length){fc.end=true;fcRender();return}
+  fc.i=n;fc.flip=false;fcRender();
+}
+function fcEnd(){
+  stopSpeak();
+  const missItems=fc.list.filter(i=>fc.miss[i.id]);
+  const skipped=fc.list.filter(i=>!fc.miss[i.id]&&!fc.got[i.id]);
+  const notKnown=fc.base.filter(i=>!store.known[i.id]);
+  const nGot=fc.list.filter(i=>fc.got[i.id]).length;
+  app.innerHTML=`<div class="stage"><div class="q"><span class="label">Hết lượt flashcard</span>
+  <div class="row" style="justify-content:center;gap:28px">
+    <div><div class="score">${nGot}</div><div class="muted">đã thuộc</div></div>
+    <div><div class="score" style="color:var(--bad)">${missItems.length}</div><div class="muted">chưa thuộc</div></div>
+    ${skipped.length?`<div><div class="score" style="color:var(--muted)">${skipped.length}</div><div class="muted">bỏ qua</div></div>`:""}
+  </div>
+  <p class="muted" style="margin:0">${notKnown.length?`Cả nhóm còn ${notKnown.length}/${fc.base.length} mục chưa thuộc.`:"Bạn đã thuộc hết cả nhóm này!"}</p>
+  <div class="row" style="justify-content:center">
+    ${notKnown.length?`<button class="btn primary" data-act="fc-learn-unknown">Chỉ học lại ${notKnown.length} mục chưa thuộc</button>`:""}
+    <button class="btn ${notKnown.length?"":"primary"}" data-act="fc-restart">Học lại từ đầu cả nhóm</button>
+    <button class="btn" data-go="topic">Chọn cách ôn khác</button>
+  </div></div>
+  ${notKnown.length?`<h3>Các mục chưa thuộc</h3><div class="vlist">${notKnown.map(i=>`<div class="vrow"><button class="spk" data-say="${esc(i.en)}" aria-label="Nghe">${SPK}</button><div style="min-width:0"><div><span class="en">${esc(i.en)}</span><span class="ipa">${esc(i.ipa)}</span></div><div class="vi">${esc(i.vi)}</div></div></div>`).join("")}</div>`:""}</div>`;
+}
+
+/* --- Ghép cặp --- */
+let mt=null;
+function matchStart(pool){
+  const pick=shuffle(pool).slice(0,Math.min(6,pool.length));
+  const tiles=shuffle([...pick.map(p=>({p,side:"en"})),...pick.map(p=>({p,side:"vi"}))]);
+  mt={pool,tiles,sel:null,left:pick.length,miss:0,start:Date.now(),timer:null};
+  app.innerHTML=`<div class="stage"><div class="progress"><span id="mtime">0 giây</span><div class="bar"><i id="mbar" style="width:0%"></i></div><span id="mmiss">Sai 0</span></div>
+  <p class="muted" style="margin:0">Chọn một từ tiếng Anh rồi chọn nghĩa tiếng Việt tương ứng.</p>
+  <div class="mgrid">${tiles.map((t,k)=>`<button class="tile ${t.side}" data-tile="${k}">${esc(t.p[t.side])}</button>`).join("")}</div>
+  <div id="fb"></div></div>`;
+  mt.timer=setInterval(()=>{const e=$("#mtime");if(!e){clearInterval(mt.timer);return}e.textContent=Math.round((Date.now()-mt.start)/1000)+" giây"},500);
+}
+function matchTap(k){
+  const t=mt.tiles[k];const el=document.querySelector(`[data-tile="${k}"]`);
+  if(t.side==="en")speak(t.p.en);
+  if(mt.sel==null){mt.sel=k;el.classList.add("sel");return}
+  const s=mt.tiles[mt.sel];const sEl=document.querySelector(`[data-tile="${mt.sel}"]`);
+  if(mt.sel===k){el.classList.remove("sel");mt.sel=null;return}
+  if(s.side===t.side){sEl.classList.remove("sel");mt.sel=k;el.classList.add("sel");return}
+  if(s.p===t.p){
+    sEl.classList.add("done");el.classList.add("done");mt.left--;mt.sel=null;
+    const tot=mt.tiles.length/2;$("#mbar").style.width=((tot-mt.left)/tot*100)+"%";
+    if(!mt.left){
+      clearInterval(mt.timer);const sec=Math.round((Date.now()-mt.start)/1000);
+      const rec=saveBest("match",sec,true);
+      $("#fb").innerHTML=`<div class="q"><span class="label">Hoàn thành</span><div class="score">${sec}s</div><p style="margin:0">Sai ${mt.miss} lần${rec?" · <b style=\"color:var(--accent)\">Kỷ lục mới!</b>":""}</p>
+      <div class="row" style="justify-content:center"><button class="btn primary" data-act="match-again">Ván mới</button><button class="btn" data-go="topic">Chọn cách ôn khác</button></div></div>`;
+    }
+  }else{
+    mt.miss++;$("#mmiss").textContent="Sai "+mt.miss;
+    sEl.classList.remove("sel");sEl.classList.add("bad");el.classList.add("bad");mt.sel=null;
+    setTimeout(()=>{sEl.classList.remove("bad");el.classList.remove("bad")},450);
+  }
+}
+
+/* --- Sắp xếp cụm từ --- */
+let sc=null;
+function scrStart(pool){
+  sc={queue:shuffle(pool).slice(0,Math.min(10,pool.length)),i:0,correct:0,wrong:[]};scrNew();
+}
+function scrNew(){
+  const q=sc.queue[sc.i];const words=q.en.split(" ");
+  let order=shuffle(words.map((w,k)=>k));
+  if(words.length>2){let n=0;while(order.every((v,k)=>v===k)&&n++<10)order=shuffle(order)}
+  sc.tokens=order.map(k=>words[k]);sc.picked=[];sc.answered=false;scrRender();
+}
+function scrRender(){
+  const q=sc.queue[sc.i];
+  app.innerHTML=`<div class="stage">${header(sc.i,sc.queue.length,`<span>Đúng ${sc.correct}</span>`)}
+  <div class="q"><span class="label">Xếp thành cụm có nghĩa</span><div class="big">${esc(q.vi)}</div></div>
+  <div class="slots" id="slots">${sc.picked.length?sc.picked.map((k,j)=>`<button class="chip" data-unpick="${j}">${esc(sc.tokens[k])}</button>`).join(""):'<span class="muted" style="font-size:13px;padding:4px">Chạm vào các từ bên dưới theo đúng thứ tự</span>'}</div>
+  <div class="chips">${sc.tokens.map((w,k)=>sc.picked.includes(k)?"":`<button class="chip" data-pick="${k}">${esc(w)}</button>`).join("")}</div>
+  <div class="row"><button class="btn primary" data-act="scr-check" ${sc.picked.length!==sc.tokens.length?"disabled":""}>Kiểm tra</button><button class="btn" data-act="scr-clear">Xếp lại</button></div>
+  <div id="fb"></div></div>`;
+}
+function scrCheck(){
+  const q=sc.queue[sc.i];const ans=sc.picked.map(k=>sc.tokens[k]).join(" ");
+  const ok=ans===q.en;sc.answered=true;
+  if(ok)sc.correct++;else sc.wrong.push(q);
+  $("#slots").classList.add(ok?"right":"wrong");
+  document.querySelectorAll("[data-unpick],[data-act='scr-check'],[data-act='scr-clear']").forEach(b=>b.disabled=true);
+  $("#fb").innerHTML=`<div class="fb ${ok?"ok":"no"}">${ok?"Chính xác!":"Đáp án:"} <b>${esc(q.en)}</b><button class="spk" data-say="${esc(q.en)}" aria-label="Nghe">${SPK}</button><span style="flex:1"></span><button class="btn primary" data-act="scr-next">Câu tiếp</button></div>${noteHTML(q)}`;
+  speak(q.en);
+}
+function scrNext(){
+  sc.i++;
+  if(sc.i<sc.queue.length)return scrNew();
+  sess={mode:"scramble",queue:sc.queue,correct:sc.correct,wrong:sc.wrong};result();
+}
+
+/* ===================== SỰ KIỆN ===================== */
+window.__toeicClick=(e=>{
+  const b=e.target.closest("button");if(!b)return;
+  const d=b.dataset;
+  if(d.say){e.stopPropagation();speak(d.say);if(!d.act)return}
+  if(d.go){go(d.go);return}
+  if(d.topic){go("topic",{topic:d.topic});return}
+  if(d.mode){go("mode",{mode:d.mode});return}
+  if(d.filter){store.filter=d.filter;save();renderTopic();return}
+  if(d.opt!=null){mcqAnswer(+d.opt);return}
+  if(d.tile!=null){matchTap(+d.tile);return}
+  if(d.pick!=null){sc.picked.push(+d.pick);scrRender();return}
+  if(d.unpick!=null){sc.picked.splice(+d.unpick,1);scrRender();return}
+  switch(d.act){
+    case "next":next();break;
+    case "check":inpCheck(false);break;
+    case "skip":inpCheck(true);break;
+    case "hint":{const h=$("#hint");if(h)h.hidden=false;$("#ans").focus();break}
+    case "again":startMode(sess.mode);break;
+    case "retrywrong":{const m=sess.mode,w=sess.wrong.slice();m==="scramble"?scrStart(w):startMode(m,w);break}
+    case "flip":{fc.flip=!fc.flip;document.querySelector(".fc").classList.toggle("flip",fc.flip);const nt=document.querySelector("#fcnote .note");if(nt)nt.hidden=!fc.flip;if(fc.flip&&fc.front==="vi")speak(fc.list[fc.i].en);break}
+    case "fc-prev":fcMove(-1);break;
+    case "fc-next":fcMove(1);break;
+    case "fc-got":fcMark(true);break;
+    case "fc-miss":fcMark(false);break;
+    case "fc-shuffle":fc.list=shuffle(fc.list);fc.i=0;fc.flip=false;fcRender();toast("Đã xáo thẻ");break;
+    case "fc-restart":{const b=fc.base;flashStart(b);toast("Học lại từ đầu "+b.length+" mục");break}
+    case "fc-learn-unknown":{const b=fc.base,u=b.filter(i=>!store.known[i.id]);flashStart(b);fc.list=shuffle(u);fcRender();toast(u.length+" mục chưa thuộc");break}
+    case "front-en":fc.front="en";fc.flip=false;fcRender();break;
+    case "front-vi":fc.front="vi";fc.flip=false;fcRender();break;
+    case "match-again":matchStart(mt.pool);break;
+    case "scr-check":scrCheck();break;
+    case "scr-clear":sc.picked=[];scrRender();break;
+    case "scr-next":scrNext();break;
+  }
+});
+window.__toeicChange=(e=>{if(e.target.id==="slowchk")slow=e.target.checked;
+  if(e.target.id==="voicesel"){store.voice=e.target.value;save();VOICE=null;pickVoice();lastSay={t:"",at:0};speak("Hello, this is my voice.")}});
+window.__toeicSubmit=(e=>{if(e.target.id==="inpform"){e.preventDefault();inpCheck(false)}});
+window.__toeicKey=(e=>{
+  if(S.view!=="mode")return;
+  const inInput=e.target.tagName==="INPUT";
+  if(S.mode==="flash"&&fc&&!inInput){
+    if(fc.end)return;
+    if(e.key.toLowerCase()==="j"){fcMark(false);return}
+    if(e.key===" "){e.preventDefault();document.querySelector('[data-act="flip"]').click()}
+    else if(e.key==="ArrowRight")fcMove(1);else if(e.key==="ArrowLeft")fcMove(-1);
+    else if(e.key.toLowerCase()==="s")speak(fc.list[fc.i].en);
+    else if(e.key.toLowerCase()==="k")fcMark(true);
+    return;
+  }
+  if(["vi2en","en2vi","listen"].includes(S.mode)&&sess&&!inInput){
+    if(/^[1-4]$/.test(e.key)&&!sess.answered){const k=+e.key-1;if(sess.opts&&sess.opts[k])mcqAnswer(k)}
+    else if(e.key==="Enter"&&sess.answered){e.preventDefault();next()}
+  }
+  if(S.mode==="scramble"&&sc&&e.key==="Enter"&&!inInput){
+    if(sc.answered)scrNext();else if(sc.picked.length===sc.tokens.length)scrCheck();
+  }
+});
+document.onclick=document.onchange=document.onsubmit=document.onkeydown=null;
+if(!window.__toeicBound){
+  window.__toeicBound=true;
+  /* Bắt sự kiện ở tầng ngoài cùng và chặn lan truyền: mỗi thao tác chỉ được xử lý đúng 1 lần */
+  [["click","__toeicClick"],["change","__toeicChange"],["submit","__toeicSubmit"],["keydown","__toeicKey"]].forEach(([ev,fn])=>{
+    window.addEventListener(ev,e=>{e.stopImmediatePropagation();const f=window[fn];if(f)f(e)},true);
+  });
+}
+render();
+</script>
+
+</body></html>
