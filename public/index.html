@@ -1433,7 +1433,7 @@ function loadLib(src,g){
 async function readText(f){
   const buf=await f.arrayBuffer();
   let t=new TextDecoder("utf-8").decode(buf);
-  if(t.includes("�")){try{t=new TextDecoder("windows-1258").decode(buf)}catch(e){}}
+  if(t.includes("\uFFFD")){try{t=new TextDecoder("windows-1258").decode(buf)}catch(e){}}
   return t;
 }
 async function readFileRows(f){
