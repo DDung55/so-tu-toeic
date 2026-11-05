@@ -228,6 +228,9 @@ code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.9em;background
 .btn.sm svg{width:14px;height:14px}
 .btn.danger{color:var(--bad)}.btn.danger:hover{border-color:var(--bad)}
 .section>.seg{width:fit-content}
+button.slot-empty{border:1.5px dashed var(--card-line);cursor:pointer}
+button.slot-empty:hover{border-color:var(--accent);background:var(--accent-soft);color:var(--fg)}
+.slot-add{font-size:13px;font-weight:600;color:var(--accent-strong);margin-top:2px}
 .empty{border:1px dashed var(--line);border-radius:12px;padding:20px;text-align:center;color:var(--muted);font-size:14px;background:var(--bg)}
 .savebar{position:sticky;bottom:0;z-index:4;background:rgba(250,252,250,.94);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);border-top:1px solid var(--line);margin:0 -16px;padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 </style>
@@ -760,8 +763,16 @@ function crumbs(){
   const c=[["home","Trang chủ"]];
   const tp=S.topic&&["topic","mode"].includes(S.view)?topicById(S.topic):null;
   const isNW=S.view==="newwords"||(tp&&tp.section==="nw");
+  const slotId=S.view==="slot"?S.slot:tp&&tp.slot?tp.slot:S.view==="create"&&draft&&draft.slot?draft.slot:"";
+  const sl=slotId&&slotById(slotId);
   const isMY=["mysets","create"].includes(S.view)||(tp&&tp.section==="my");
-  if(isMY){c.push(["mysets","Bộ học của bạn"]);if(S.view==="create")c.push(["create",draft&&draft.editId?"Sửa bộ học":"Tạo bộ học mới"])}
+  if(sl){
+    if(sl.where!=="home")c.push(["listening","Listening"]);
+    if(sl.where==="part1")c.push(["part1","Part 1 · Tranh tả người"]);
+    c.push(["slot",slotName(sl)]);
+    if(S.view==="create")c.push(["create",draft&&draft.editId?"Sửa bộ học":"Tạo bộ học mới"]);
+  }
+  else if(isMY){c.push(["mysets","Bộ học của bạn"]);if(S.view==="create")c.push(["create",draft&&draft.editId?"Sửa bộ học":"Tạo bộ học mới"])}
   else if(isNW){c.push(["newwords","New words"])}
   else{
   if(S.view!=="home"){c.push(["listening","Listening"])}
@@ -773,8 +784,11 @@ function crumbs(){
 }
 function render(){
   if(["topic","mode"].includes(S.view)&&!topicById(S.topic))S={view:"home",topic:null,mode:null};
+  if(S.view==="slot"&&!slotById(S.slot))S={view:"home",topic:null,mode:null};
+  if(S.view!=="slot")slotEditing=false;
   crumbs();
   if(S.view==="mysets")return renderMySets();
+  if(S.view==="slot")return renderSlot();
   if(S.view==="create")return renderCreate();
   if(S.view==="home")return renderHome();
   if(S.view==="listening")return renderListening();
@@ -808,7 +822,8 @@ function renderHome(){
       <div class="bar"><i style="width:${MY_ITEMS.length?knownCount(MY_ITEMS)/MY_ITEMS.length*100:0}%"></i></div>
     </button>
     ${addCard()}
-    <div class="card soon"><span class="pill grey">Sắp có</span><h2>Reading</h2><span class="meta">Part 5, 6, 7</span></div>
+    ${slotCards("home",true)}
+    <button class="card add-card add-slot" data-act="my-slot-new"><span class="add-ic">+</span><h3>Thêm mục mới</h3><span class="meta">Tạo một mục học mới và tự đặt tên, ví dụ: Part 5 · Ngữ pháp</span></button>
   </div>`;
 }
 function renderNewWords(){
@@ -822,9 +837,7 @@ function renderListening(){
   <div><p class="eyebrow">Kỹ năng</p><h1>Listening</h1><p class="lead">Từ vựng theo từng Part của đề thi nghe TOEIC.</p></div>
   <div class="grid">
     <button class="card" data-go="part1"><span class="pill">${DATA.length} chủ đề</span><h2>Part 1 · Mô tả tranh</h2><span class="meta">Tranh tả người: hành động, tư thế, nơi chốn</span></button>
-    <div class="card soon"><span class="pill grey">Sắp có</span><h2>Part 2 · Hỏi đáp</h2><span class="meta">Câu hỏi – phản hồi</span></div>
-    <div class="card soon"><span class="pill grey">Sắp có</span><h2>Part 3 · Hội thoại</h2><span class="meta">Hội thoại ngắn</span></div>
-    <div class="card soon"><span class="pill grey">Sắp có</span><h2>Part 4 · Bài nói</h2><span class="meta">Thông báo, bài nói ngắn</span></div>
+    ${slotCards("listening",true)}
   </div>`;
 }
 function topicCard(t){
@@ -843,7 +856,7 @@ function renderPart1(){
   <p class="lead">Part 1 thường mô tả người đang làm gì: <b>be + V-ing</b>. Học chắc cụm động từ trong từng chủ đề, khi nghe sẽ loại đáp án nhanh hơn.</p></div>
   <section class="section"><div class="grid">${DATA.map(topicCard).join("")}${topicCard(ALL_TOPIC)}</div></section>
   <section class="section"><h2>Chủ đề khác của Part 1</h2>
-  <div class="grid"><div class="card soon"><span class="pill grey">Sắp có</span><h3>Tranh tả vật & cảnh</h3><span class="meta">Câu bị động: be placed, have been stacked…</span></div></div></section>`;
+  <div class="grid">${slotCards("part1")}</div></section>`;
 }
 function modeIcon(m){return `<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${m.ico}</svg></span>`}
 function renderTopic(){
@@ -1112,14 +1125,28 @@ function scrNext(){
 /* ===================== BỘ HỌC CỦA BẠN (tự tạo) ===================== */
 /* Lưu trong localStorage riêng: {v:1, sets:[{id,name,sub,created,items:[{en,ipa,vi,pos,ex,exVi,syn,note}]}]} */
 const MY_KEY="toeic-my-sets-v1";
-let mySets=(()=>{try{const r=JSON.parse(localStorage.getItem(MY_KEY));return r&&Array.isArray(r.sets)?r.sets:[]}catch(e){return []}})();
+const MY_RAW=(()=>{try{return JSON.parse(localStorage.getItem(MY_KEY))||{}}catch(e){return {}}})();
+let mySets=Array.isArray(MY_RAW.sets)?MY_RAW.sets:[];
+/* Các mục (trước đây là “Sắp có”): người dùng tự đặt tên, tự thêm bộ học vào. Mục có ít nhất 1 từ thì hiện như mục bình thường. */
+let mySlots=MY_RAW.slots&&typeof MY_RAW.slots==="object"?MY_RAW.slots:{};
+mySlots.names=mySlots.names||{};mySlots.custom=Array.isArray(mySlots.custom)?mySlots.custom:[];
+const SLOT_BASE=[
+ {id:"reading",where:"home",name:"Reading",sub:"Part 5, 6, 7"},
+ {id:"l-p2",where:"listening",name:"Part 2 · Hỏi đáp",sub:"Câu hỏi – phản hồi"},
+ {id:"l-p3",where:"listening",name:"Part 3 · Hội thoại",sub:"Hội thoại ngắn"},
+ {id:"l-p4",where:"listening",name:"Part 4 · Bài nói",sub:"Thông báo, bài nói ngắn"},
+ {id:"p1-objects",where:"part1",name:"Tranh tả vật & cảnh",sub:"Câu bị động: be placed, have been stacked…"}
+];
+function allSlots(){return [...SLOT_BASE,...mySlots.custom.map(c=>({id:c.id,where:"home",name:"Mục mới",sub:c.sub||"Mục bạn tự thêm",custom:true}))]}
+function slotById(id){return allSlots().find(x=>x.id===id)}
+function slotName(sl){return (sl&&mySlots.names[sl.id])||(sl&&sl.name)||""}
 const MY_DATA=[],MY_ITEMS=[];
-function mySave(){try{localStorage.setItem(MY_KEY,JSON.stringify({v:1,sets:mySets}));return true}catch(e){toast("Không lưu được vào trình duyệt (bộ nhớ đầy hoặc bị chặn).");return false}}
+function mySave(){try{localStorage.setItem(MY_KEY,JSON.stringify({v:1,sets:mySets,slots:mySlots}));return true}catch(e){toast("Không lưu được vào trình duyệt (bộ nhớ đầy hoặc bị chặn).");return false}}
 function guessType(r){const p=r.pos||"";if(/cụm|thành ngữ/.test(p))return "p";if(p)return "w";return /\s/.test(String(r.en).trim())?"p":"w"}
 function myBuild(){
   MY_DATA.length=0;MY_ITEMS.length=0;
   mySets.forEach(s=>{
-    const t={id:s.id,section:"my",custom:true,name:s.name,sub:s.sub||"Bộ học bạn tự tạo",eyebrow:"Bộ học của bạn",words:[],phrases:[],items:[]};
+    const t={id:s.id,section:"my",custom:true,slot:s.slot&&slotById(s.slot)?s.slot:"",name:s.name,sub:s.sub||"Bộ học bạn tự tạo",eyebrow:"Bộ học của bạn",words:[],phrases:[],items:[]};
     const seen=new Set();
     (s.items||[]).forEach(r=>{
       if(!r||!r.en||!r.vi||seen.has(r.en))return;seen.add(r.en);
@@ -1480,13 +1507,38 @@ async function translate(text){
 
 /* ---------- Trang: Bộ học của bạn + Tạo/Sửa bộ học ---------- */
 let draft=null;
-function newDraft(){return {editId:null,name:"",sub:"",rows:[],tab:"file",msg:null}}
+function newDraft(){return {editId:null,name:"",sub:"",slot:"",rows:[],tab:"file",msg:null}}
 function addCard(){return `<button class="card add-card" data-act="my-new"><span class="add-ic">+</span><h3>Tạo bộ học mới</h3><span class="meta">Tự nhập hoặc tải file Word, Excel, CSV, TXT lên. Hệ thống tự tạo đủ 8 cách ôn.</span></button>`}
+function slotSets(id){return MY_DATA.filter(t=>t.slot===id)}
+function slotCount(id){return slotSets(id).reduce((n,t)=>n+t.items.length,0)}
+function slotCard(sl,big){
+  const sets=slotSets(sl.id),n=slotCount(sl.id),H=big?"h2":"h3";
+  if(!n)return `<button class="card soon slot-empty" data-slot="${sl.id}"><span class="pill grey">Chưa có nội dung</span><${H}>${esc(slotName(sl))}</${H}><span class="meta">${esc(sl.sub)}</span><span class="slot-add">+ Bấm để thêm nội dung</span></button>`;
+  const items=sets.flatMap(t=>t.items),k=knownCount(items);
+  return `<button class="card" data-slot="${sl.id}"><span class="pill my">Tự tạo</span><${H}>${esc(slotName(sl))}</${H}><span class="meta">${esc(sl.sub)}</span>
+    <span class="meta">${sets.length} bộ · ${n} từ và cụm từ · đã thuộc ${k}</span><div class="bar"><i style="width:${n?k/n*100:0}%"></i></div></button>`;
+}
+function slotCards(where,big){return allSlots().filter(x=>x.where===where).map(x=>slotCard(x,big)).join("")}
+let slotEditing=false;
+function renderSlot(){
+  const sl=slotById(S.slot),sets=slotSets(sl.id);
+  app.innerHTML=`
+  <div class="hero">
+    <div><p class="eyebrow">${sl.where==="home"?"Mục học":sl.where==="part1"?"Listening · Part 1":"Listening"}</p>
+    ${slotEditing?`<form id="slot-form" class="row" autocomplete="off"><label class="fld" style="flex:1;min-width:200px"><span>Tên mục</span><input id="slot-name" value="${esc(slotName(sl))}" maxlength="60"></label><button class="btn primary" type="submit">Lưu tên</button><button class="btn" type="button" data-act="my-slot-cancel">Hủy</button></form>`
+      :`<h1>${esc(slotName(sl))}</h1>`}
+    <p class="lead">${esc(sl.sub)} · ${sets.length?`${sets.length} bộ học · ${slotCount(sl.id)} từ và cụm từ`:"Chưa có nội dung. Hãy tạo bộ học đầu tiên cho mục này."}</p></div>
+    <div class="row">${slotEditing?"":`<button class="btn sm" data-act="my-slot-rename">✎ Đổi tên mục</button>`}${sl.custom?`<button class="btn sm danger" data-act="my-slot-del">Xóa mục</button>`:""}</div>
+  </div>
+  <div class="grid">${addCard()}${sets.map(topicCard).join("")}</div>`;
+  if(slotEditing){const i=$("#slot-name");if(i){i.focus();i.select()}}
+}
 function renderMySets(){
   app.innerHTML=`
   <div><p class="eyebrow">Tự tạo</p><h1>Bộ học của bạn</h1>
   <p class="lead">Tự tạo bộ từ vựng bằng cách nhập tay hoặc tải file lên. Mỗi bộ có đủ các cách ôn: Flashcard, Việt → Anh, Anh → Việt, Gõ từ, Nghe chọn nghĩa, Nghe chép chính tả, Ghép cặp, Sắp xếp cụm từ.</p></div>
-  <div class="grid">${addCard()}${MY_DATA.map(topicCard).join("")}</div>
+  <div class="grid">${addCard()}${MY_DATA.filter(t=>!t.slot).map(topicCard).join("")}</div>
+  ${MY_DATA.some(t=>t.slot)?`<section class="section"><h2>Bộ học nằm trong các mục khác</h2><div class="grid">${allSlots().filter(x=>slotCount(x.id)).map(x=>slotCard(x)).join("")}</div></section>`:""}
   <section class="section"><h2>Sao lưu</h2>
   <p class="muted" style="margin:0;font-size:14px">Bộ học được lưu trên trình duyệt của máy này. Tải bản sao lưu để chuyển sang máy khác, hoặc phòng khi lỡ xóa dữ liệu trình duyệt.</p>
   <div class="row"><button class="btn" data-act="my-export" ${mySets.length?"":"disabled"}>Tải bản sao lưu</button>
@@ -1528,7 +1580,8 @@ function renderCreate(){
   <p class="lead">Tải file lên hoặc tự nhập. Hệ thống tự tách ra <b>từ mới, loại từ, phiên âm, nghĩa, câu ví dụ, từ đồng nghĩa</b>, rồi tạo sẵn đủ 8 cách ôn cho bộ học.</p></div>
   <div class="hero"><div class="fgrid">
     <label class="fld"><span>Tên bộ học</span><input id="d-name" data-d="name" value="${esc(d.name)}" placeholder="Ví dụ: Unit 5 – Hợp đồng"></label>
-    <label class="fld"><span>Mô tả ngắn (không bắt buộc)</span><input id="d-sub" data-d="sub" value="${esc(d.sub)}" placeholder="Ví dụ: Từ mới trong đề ETS 2024 Test 3"></label></div></div>
+    <label class="fld"><span>Mô tả ngắn (không bắt buộc)</span><input id="d-sub" data-d="sub" value="${esc(d.sub)}" placeholder="Ví dụ: Từ mới trong đề ETS 2024 Test 3"></label>
+    <label class="fld"><span>Đặt vào mục</span><select id="d-slot" data-d="slot"><option value="">Bộ học của bạn</option>${allSlots().map(x=>`<option value="${x.id}"${d.slot===x.id?" selected":""}>${esc(slotName(x))}</option>`).join("")}</select></label></div></div>
   <section class="section"><h2>Bước 1 · Thêm nội dung</h2>
     <div class="seg" role="group" aria-label="Cách thêm"><button data-act="d-tab" data-tab="file" aria-pressed="${d.tab==="file"}">Tải file lên</button><button data-act="d-tab" data-tab="manual" aria-pressed="${d.tab==="manual"}">Tự nhập</button></div>
     ${d.tab==="file"?`
@@ -1645,26 +1698,28 @@ function draftSave(){
     items.push({en,ipa:normIpa(r.ipa),vi:r.vi.trim(),pos:(r.pos||"").trim(),ex:(r.ex||"").trim(),exVi:(r.exVi||"").trim(),syn:synList(r.syn).join(", "),note:(r.note||"").trim()})});
   const ed=!!draft.editId;
   let set=ed&&mySets.find(s=>s.id===draft.editId);
-  if(set){set.name=name;set.sub=(draft.sub||"").trim();set.items=items;set.updated=Date.now()}
-  else{set={id:"my-"+Date.now().toString(36),name,sub:(draft.sub||"").trim(),created:Date.now(),items};mySets.unshift(set)}
+  const slot=draft.slot&&slotById(draft.slot)?draft.slot:"";
+  if(set){set.name=name;set.sub=(draft.sub||"").trim();set.slot=slot;set.items=items;set.updated=Date.now()}
+  else{set={id:"my-"+Date.now().toString(36),name,sub:(draft.sub||"").trim(),slot,created:Date.now(),items};mySets.unshift(set)}
   if(!mySave())return;
   myBuild();LOCAL=null;draft=null;
-  go("topic",{topic:set.id});
+  go("topic",{topic:set.id,slot:set.slot||""});
   toast(ed?"Đã lưu thay đổi.":`Đã tạo bộ học ${items.length} mục. Chọn cách ôn bên dưới!`);
 }
 function myEdit(id){
   const s=mySets.find(x=>x.id===id);if(!s)return;
-  draft={...newDraft(),editId:id,name:s.name,sub:s.sub||"",tab:"manual",rows:s.items.map(r=>({...blankRow(),...r}))};
+  draft={...newDraft(),editId:id,name:s.name,sub:s.sub||"",slot:s.slot||"",tab:"manual",rows:s.items.map(r=>({...blankRow(),...r}))};
   go("create");
 }
 function myDelete(id){
+  const old=mySets.find(s=>s.id===id),back=old&&old.slot&&slotById(old.slot)?old.slot:"";
   mySets=mySets.filter(s=>s.id!==id);mySave();
   Object.keys(store.known).forEach(k=>{if(k.startsWith(id+":"))delete store.known[k]});
   Object.keys(store.best).forEach(k=>{if(k.startsWith(id+"|"))delete store.best[k]});save();
-  myBuild();LOCAL=null;go("mysets");toast("Đã xóa bộ học.");
+  myBuild();LOCAL=null;back?go("slot",{slot:back}):go("mysets");toast("Đã xóa bộ học.");
 }
 function myExport(){
-  const data={type:"so-tu-toeic-backup",v:1,exported:new Date().toISOString(),sets:mySets,known:Object.fromEntries(Object.entries(store.known).filter(([k])=>k.startsWith("my-")))};
+  const data={type:"so-tu-toeic-backup",v:1,exported:new Date().toISOString(),sets:mySets,slots:mySlots,known:Object.fromEntries(Object.entries(store.known).filter(([k])=>k.startsWith("my-")))};
   downloadFile("so-tu-toeic-sao-luu-"+new Date().toISOString().slice(0,10)+".json",JSON.stringify(data,null,1),"application/json");
 }
 async function myImport(f){
@@ -1673,6 +1728,7 @@ async function myImport(f){
     if(!j||j.type!=="so-tu-toeic-backup"||!Array.isArray(j.sets))throw 0;
     let n=0;j.sets.forEach(s=>{if(!s||!s.id||!Array.isArray(s.items))return;const i=mySets.findIndex(x=>x.id===s.id);if(i>=0)mySets[i]=s;else mySets.push(s);n++});
     if(j.known)Object.assign(store.known,j.known);save();
+    if(j.slots&&typeof j.slots==="object"){Object.assign(mySlots.names,j.slots.names||{});(j.slots.custom||[]).forEach(c=>{if(c&&c.id&&!mySlots.custom.some(x=>x.id===c.id))mySlots.custom.push(c)})}
     mySave();myBuild();LOCAL=null;renderMySets();toast(`Đã khôi phục ${n} bộ học.`);
   }catch(e){toast("File này không phải bản sao lưu của Sổ từ TOEIC.")}
 }
@@ -1689,7 +1745,8 @@ window.__toeicClick=(e=>{
   const d=b.dataset;
   if(d.say){e.stopPropagation();speak(d.say);if(!d.act)return}
   if(d.go){go(d.go);return}
-  if(d.topic){go("topic",{topic:d.topic});return}
+  if(d.topic){const t=topicById(d.topic);go("topic",{topic:d.topic,slot:t&&t.slot?t.slot:S.slot});return}
+  if(d.slot){go("slot",{slot:d.slot});return}
   if(d.mode){go("mode",{mode:d.mode});return}
   if(d.filter){store.filter=d.filter;save();renderTopic();return}
   if(d.act&&/^(my|d)-/.test(d.act)){myAct(d,b);return}
@@ -1726,7 +1783,8 @@ window.__toeicChange=(e=>{if(e.target.id==="slowchk")slow=e.target.checked;
   if(draftField(e.target)){const i=+e.target.dataset.r;const row=document.querySelector(`.drow[data-row="${i}"]`);if(row&&draft.rows[i]){row.classList.toggle("miss",!draft.rows[i].vi);row.querySelector("summary").innerHTML=rowSum(draft.rows[i],i);const n=draft.rows.length,miss=draft.rows.filter(r=>!r.vi).length;$("#d-count").textContent=`${n} mục`+(miss?` · ${miss} mục chưa có nghĩa`:"")}return}
   if(e.target.id==="voicesel"){store.voice=e.target.value;save();VOICE=null;pickVoice();lastSay={t:"",at:0};speak("Hello, this is my voice.")}});
 window.__toeicSubmit=(e=>{if(e.target.id==="inpform"){e.preventDefault();inpCheck(false)}
-  if(e.target.id==="d-form"){e.preventDefault();draftAddManual(e.target)}});
+  if(e.target.id==="d-form"){e.preventDefault();draftAddManual(e.target)}
+  if(e.target.id==="slot-form"){e.preventDefault();const v=$("#slot-name").value.trim();if(!v){toast("Hãy nhập tên mục.");return}mySlots.names[S.slot]=v;mySave();slotEditing=false;render();toast("Đã đổi tên mục.")}});
 /* Ô nhập của trang tạo bộ học: cập nhật bản nháp ngay khi gõ */
 function draftField(el){
   if(!draft||S.view!=="create"||!el.dataset)return false;
@@ -1741,7 +1799,13 @@ window.addEventListener("drop",e=>{if(S.view!=="create")return;e.preventDefault(
   if(!draft)return;if(draft.tab!=="file"){draft.tab="file";renderCreate()}if(e.dataTransfer&&e.dataTransfer.files.length)draftFiles(e.dataTransfer.files)});
 function myAct(d,b){
   switch(d.act){
-    case "my-new":if(!draft||draft.editId||!draft.rows.length){draft=newDraft()}else toast("Đang tiếp tục bản nháp chưa lưu.");go("create");break;
+    case "my-new":{const sl=S.view==="slot"?S.slot:"";if(!draft||draft.editId||!draft.rows.length){draft=newDraft()}else toast("Đang tiếp tục bản nháp chưa lưu.");if(sl)draft.slot=sl;go("create");break}
+    case "my-slot-new":{const id="slot-"+Date.now().toString(36);mySlots.custom.push({id});mySlots.names[id]="Mục mới";mySave();slotEditing=true;go("slot",{slot:id});break}
+    case "my-slot-rename":slotEditing=true;renderSlot();break;
+    case "my-slot-cancel":slotEditing=false;renderSlot();break;
+    case "my-slot-del":if(slotCount(S.slot)){toast("Mục này còn bộ học. Hãy xóa hoặc chuyển các bộ học sang mục khác trước.");break}
+      if(b.dataset.armed){mySlots.custom=mySlots.custom.filter(c=>c.id!==S.slot);delete mySlots.names[S.slot];mySave();go("home");toast("Đã xóa mục.")}
+      else{b.dataset.armed=1;b.textContent="Bấm lần nữa để xóa mục"}break;
     case "my-edit":myEdit(S.topic);break;
     case "my-del":if(b.dataset.armed){myDelete(S.topic)}else{b.dataset.armed=1;b.textContent="Bấm lần nữa để xóa hẳn";setTimeout(()=>{if(b.isConnected){delete b.dataset.armed;b.textContent="Xóa bộ học"}},4000)}break;
     case "my-export":myExport();break;
@@ -1751,7 +1815,7 @@ function myAct(d,b){
     case "d-paste":draftPaste();break;
     case "d-enrich":if(!draft.busy)draftEnrich();break;
     case "d-save":draftSave();break;
-    case "d-cancel":{const back=draft&&draft.editId;draft=null;back?go("topic",{topic:back}):go("mysets");break}
+    case "d-cancel":{const back=draft&&draft.editId,sl=draft&&draft.slot;draft=null;back?go("topic",{topic:back}):sl?go("slot",{slot:sl}):go("mysets");break}
     case "d-sample":if(d.kind==="xlsx")sampleXlsx();else if(d.kind==="csv")downloadFile("mau-bo-hoc.csv",SAMPLE_CSV,"text/csv;charset=utf-8");else downloadFile("mau-bo-hoc.txt",SAMPLE_TXT,"text/plain;charset=utf-8");break;
   }
 }
