@@ -2012,7 +2012,7 @@ function gAnnotate(root){
     const noSpk=blk.classList&&blk.classList.contains("gblk");
     let T="";const offs=nodes.map(x=>{const o=T.length;T+=x.nodeValue;return o});
     const runs=gRuns(T);if(!runs.length)return;
-    runs.forEach(r=>{r.id=GRUNS.push(T.slice(r.s,r.e).replace(/\s+/g," ").trim())-1;r.lastW=r.words[r.words.length-1]});
+    runs.forEach(r=>{r.id=GRUNS.push(gTxt(T.slice(r.s,r.e)))-1;r.lastW=r.words[r.words.length-1]});
     nodes.forEach((node,ni)=>{
       const base=offs[ni],txt=node.nodeValue,end=base+txt.length;
       const ws=[];runs.forEach(r=>r.words.forEach(w=>{if(w.s>=base&&w.e<=end)ws.push({w,r})}));
@@ -2288,7 +2288,13 @@ function gSaveLesson(){
 /* ---------- Luyện tập ---------- */
 let gs=null;
 const GKIND={mix:"Bài tập tổng hợp",tr:"Luyện dịch Việt → Anh",more:"Ôn tiếp: dịch Việt → Anh",quiz:"Ôn trắc nghiệm",basic:"Bài tập cơ bản"};
-const gNorm=s=>String(s||"").toLowerCase().replace(/[’‘`]/g,"'").replace(/\bcan't\b/g,"cannot").replace(/\bwon't\b/g,"will not").replace(/\bshan't\b/g,"shall not").replace(/n't\b/g," not").replace(/'m\b/g," am").replace(/'re\b/g," are").replace(/'ve\b/g," have").replace(/'ll\b/g," will").replace(/\bcannot\b/g,"can not").replace(/[^a-z0-9' ]/g," ").replace(/\s+/g," ").trim();
+/* Bỏ ký tự ẩn (file Word hay chèn: gạch nối mềm, khoảng trắng 0 rộng…) và chuẩn hóa khoảng trắng */
+const gTxt=s=>String(s==null?"":s).replace(/[\u00AD\u200B-\u200F\u2028-\u202F\u2060-\u206F\uFEFF]/g,m=>/[\u2028\u2029\u202F]/.test(m)?" ":"").replace(/[\u00A0\u2000-\u200A\u3000]/g," ").replace(/[“”]/g,'"').replace(/[’‘`]/g,"'").replace(/\s+/g," ").trim();
+const gNorm=s=>gTxt(s).toLowerCase().replace(/[’‘`]/g,"'").replace(/\bcan't\b/g,"cannot").replace(/\bwon't\b/g,"will not").replace(/\bshan't\b/g,"shall not").replace(/n't\b/g," not").replace(/'m\b/g," am").replace(/'re\b/g," are").replace(/'ve\b/g," have").replace(/'ll\b/g," will").replace(/\bcannot\b/g,"can not").replace(/[^a-z0-9' ]/g," ").replace(/\s+/g," ").trim();
+/* So sánh bài làm với đáp án: không phân biệt hoa/thường, dấu câu, khoảng trắng, ký tự ẩn */
+function gSame(a,b){const x=gNorm(a),y=gNorm(b);return !!x&&(x===y||x.replace(/ /g,"")===y.replace(/ /g,""))}
+/* Tách câu thành các từ để sắp xếp: dấu câu đứng riêng thì gắn vào từ phía trước */
+function gTokens(ans){const out=[];gTxt(ans).split(" ").forEach(t=>{if(!t)return;if(!/[\p{L}\p{N}]/u.test(t)&&out.length)out[out.length-1]+=t;else out.push(t)});return out}
 function gLessonText(l,max){const t=gPlain(l.html);return t.length>max?t.slice(0,max)+"\n…":t}
 function gSourceText(scope){
   if(scope==="set"){const ls=gLessons(S.gset);const per=Math.max(1500,Math.floor(16000/Math.max(1,ls.length)));return ls.map((l,i)=>`### Bài ${i+1}: ${l.title}\n${gLessonText(l,per)}`).join("\n\n")}
@@ -2337,7 +2343,7 @@ ${known.length?`\nKhông lặp lại các câu đã có:\n${known.slice(-25).map
 Trả về DUY NHẤT JSON: {"items":[{"type":"mcq","q":"...","options":["...","...","...","..."],"answer":0,"explain":"giải thích tiếng Việt: vì sao đúng, vì sao các lựa chọn khác sai"}]}. Đáp án đúng nằm ở vị trí ngẫu nhiên.`}
 function gValid(it){
   if(!it||typeof it!=="object")return null;
-  const S_=x=>String(x==null?"":x).trim();
+  const S_=x=>gTxt(x);
   const o={type:S_(it.type),explain:S_(it.explain)};
   if(o.type==="mcq"){const opts=(Array.isArray(it.options)?it.options:[]).map(S_).filter(Boolean);const a=+it.answer;if(!S_(it.q)||opts.length<2||!(a>=0&&a<opts.length))return null;
     const right=opts[a];const sh=shuffle(opts);return {...o,q:S_(it.q),options:sh,answer:sh.indexOf(right)}}
@@ -2420,7 +2426,7 @@ function renderGPrac(){
   else if(it.type==="fill"||it.type==="fix")body=`<div class="q gq"><span class="label">${G_TYPE[it.type]}</span><div class="big gblk">${esc(it.q)}</div>${it.type==="fix"?`<span class="muted" style="font-size:13px">Gõ lại cả câu sau khi đã sửa lỗi</span>`:""}</div>
     <form id="g-form" autocomplete="off"><input class="inp" id="g-ans" placeholder="${it.type==="fill"?"Từ cần điền":"Câu đã sửa đúng"}" autocapitalize="off" spellcheck="false" ${it.type==="fix"?`value="${esc(it.q)}"`:""}></form>
     <div class="row"><button class="btn primary" data-act="g-check">Kiểm tra</button><button class="btn" data-act="g-skip">Xem đáp án</button></div>`;
-  else if(it.type==="order"){if(!it.tokens){const t=it.answer.split(/\s+/);let sh=shuffle(t.map((w,k)=>({w,k})));if(t.length>1&&sh.every((x,k)=>x.k===k))sh=sh.reverse();it.tokens=sh.map(x=>x.w)}it.picked=it.picked||[];
+  else if(it.type==="order"){if(!it.tokens){it.answer=gTxt(it.answer);const t=gTokens(it.answer);let sh=shuffle(t.map((w,k)=>({w,k})));if(t.length>1&&sh.every((x,k)=>x.k===k))sh=sh.reverse();it.tokens=sh.map(x=>x.w)}it.picked=it.picked||[];
     body=`<div class="q"><span class="label">${G_TYPE.order}</span>${it.vi?`<div class="big" style="font-size:18px">${esc(it.vi)}</div>`:`<span class="muted">Bấm các từ theo đúng thứ tự (câu có trong bài lý thuyết)</span><button class="btn sm" data-say="${esc(it.answer)}">${SPK} Nghe câu để gợi ý</button>`}</div><div id="g-order"></div>`;}
   else if(it.type==="translate")body=`<div class="q"><span class="label">${G_TYPE.translate}</span><div class="big">${esc(it.vi)}</div>${it.hint?`<button class="btn sm" data-act="g-hint">Gợi ý</button><span class="muted" id="g-hint" hidden style="font-size:14px">${esc(it.hint)}</span>`:""}</div>
     <form id="g-form" autocomplete="off"><textarea class="inp" id="g-ans" rows="3" placeholder="Gõ câu tiếng Anh của bạn…" autocapitalize="sentences" spellcheck="false"></textarea></form>
@@ -2462,13 +2468,13 @@ async function gCheck(skip){
   if(it.type==="order"){
     const user=it.picked.map(k=>it.tokens[k]).join(" ");
     if(!skip&&it.picked.length<it.tokens.length)return;
-    const ok=!skip&&gNorm(user)===gNorm(it.answer);it.done=ok?"ok":"no";gRecord(ok,user);gOrderRender();
-    gShowFb(gFbHTML(ok?"ok":"no",ok?"✓ Chính xác!":"✗ Câu đúng là:",`${gAns(it.answer)}${it.vi?`<p class="muted">${esc(it.vi)}</p>`:""}${it.explain?`<p>${esc(it.explain)}</p>`:""}`));speak(it.answer);return;
+    const ok=!skip&&(gSame(user,it.answer)||gSame(user,gTokens(it.answer).join(" ")));it.done=ok?"ok":"no";gRecord(ok,user);gOrderRender();
+    gShowFb(gFbHTML(ok?"ok":"no",ok?"✓ Chính xác!":skip?"Đáp án:":"✗ Chưa đúng thứ tự. Câu đúng là:",`${gAns(it.answer)}${it.vi?`<p class="muted">${esc(it.vi)}</p>`:""}${it.explain?`<p>${esc(it.explain)}</p>`:""}`));speak(it.answer);return;
   }
   const inp=$("#g-ans");const user=inp?inp.value.trim():"";
   if(!skip&&!user){inp&&inp.focus();return}
   if(it.type==="fill"){
-    const ok=!skip&&[it.answer,...(it.accept||[])].some(a=>gNorm(a)===gNorm(user));
+    const ok=!skip&&[it.answer,...(it.accept||[])].some(a=>gSame(user,a));
     inp.readOnly=true;inp.classList.add(ok?"right":"wrong");gRecord(ok,user);
     const full=it.q.replace(/_{2,}/,it.answer);
     gShowFb(gFbHTML(ok?"ok":"no",ok?"✓ Chính xác!":"✗ Đáp án: "+esc(it.answer),`${gAns(full)}${it.explain?`<p>${esc(it.explain)}</p>`:""}`));speak(full);return;
@@ -2477,7 +2483,7 @@ async function gCheck(skip){
     if(inp){inp.readOnly=true;inp.classList.add("wrong")}gRecord(false,user);
     gShowFb(gFbHTML("no","Đáp án",`${gAns(it.answer)}${it.hint?`<p class="muted">Gợi ý: ${esc(it.hint)}</p>`:""}${it.explain?`<p>${esc(it.explain)}</p>`:""}`));speak(it.answer);return;
   }
-  if(it.type==="fix"&&gNorm(user)===gNorm(it.answer)){inp.readOnly=true;inp.classList.add("right");gRecord(true,user);
+  if(it.type==="fix"&&gSame(user,it.answer)){inp.readOnly=true;inp.classList.add("right");gRecord(true,user);
     gShowFb(gFbHTML("ok","✓ Chính xác!",`${gAns(it.answer)}${it.wrong?`<p>Lỗi sai: <s>${esc(it.wrong)}</s></p>`:""}${it.explain?`<p>${esc(it.explain)}</p>`:""}`));speak(it.answer);return}
   /* Câu dịch, hoặc câu sửa lỗi viết khác đáp án: nhờ AI chấm */
   inp.readOnly=true;gs.grading=true;gs.answered=true;
