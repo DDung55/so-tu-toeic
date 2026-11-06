@@ -1586,7 +1586,12 @@ function renderMySets(){
 }
 const SAMPLE_CSV="﻿Từ vựng,Loại từ,Phiên âm,Nghĩa,Ví dụ,Nghĩa ví dụ,Từ đồng nghĩa\nnegotiate,động từ,/nɪˈɡəʊʃieɪt/,đàm phán; thương lượng,We need to negotiate a better price.,Chúng ta cần thương lượng một mức giá tốt hơn.,\"bargain, discuss\"\ndeadline,danh từ,/ˈdedlaɪn/,hạn chót,The deadline for the report is Friday.,Hạn chót nộp báo cáo là thứ Sáu.,due date\nin charge of,cụm từ,/ɪn ˈtʃɑːdʒ əv/,phụ trách,Ms. Lee is in charge of the marketing team.,Cô Lee phụ trách nhóm marketing.,responsible for\n";
 const SAMPLE_TXT="negotiate (v) /nɪˈɡəʊʃieɪt/: đàm phán, thương lượng\nVí dụ: We need to negotiate a better price. (Chúng ta cần thương lượng một mức giá tốt hơn.)\nĐồng nghĩa: bargain, discuss\n\ndeadline (n) /ˈdedlaɪn/: hạn chót\nVí dụ: The deadline for the report is Friday. (Hạn chót nộp báo cáo là thứ Sáu.)\nĐồng nghĩa: due date\n\nin charge of (phr) /ɪn ˈtʃɑːdʒ əv/: phụ trách\nVí dụ: Ms. Lee is in charge of the marketing team. (Cô Lee phụ trách nhóm marketing.)\nĐồng nghĩa: responsible for\n";
-function downloadFile(name,content,type){
+/* Trong khung xem trước của Claude, trình duyệt chặn tải trực tiếp → dùng cách tải của Claude nếu có */
+let DL_CAP;
+function dlCap(){if(DL_CAP===undefined)DL_CAP=window.claude&&typeof window.claude.use==="function"?window.claude.use("downloads").catch(()=>null):Promise.resolve(null);return DL_CAP}
+async function downloadFile(name,content,type){
+  const cap=await dlCap();
+  if(cap){try{await cap.save({filename:name,data:new Blob([content],{type})});toast("Đã tải "+name)}catch(e){if(e&&e.code!=="declined")toast("Không tải được file. Bạn có thể bấm “Dùng thử bộ mẫu” để xem mẫu ngay.")}return}
   const url=URL.createObjectURL(new Blob([content],{type}));const a=document.createElement("a");a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),4000);
 }
 function fld(label,f,r,i,cls){return `<label class="fld ${cls||""}"><span>${label}</span><input data-f="${f}" data-r="${i}" value="${esc(r[f]||"")}" ${f==="en"?'spellcheck="false" autocapitalize="off"':""}></label>`}
@@ -1633,7 +1638,8 @@ function renderCreate(){
       <p class="note-tip"><b>Cách 2 – Mỗi từ một dòng</b> (Word hoặc TXT), các dòng “Ví dụ:”, “Đồng nghĩa:” ngay bên dưới sẽ được gắn vào từ phía trên:</p>
       <pre class="fmt">${esc(SAMPLE_TXT.split("\n\n")[0])}</pre>
       <p class="note-tip">Cũng đọc được kiểu viết gọn như <code>negotiate - đàm phán</code>, <code>deadline: hạn chót</code>, <code>in charge of = phụ trách</code>. Loại từ viết <code>(n) (v) (adj) (adv) (phr)</code> hoặc tiếng Việt đều được.</p>
-      <div class="row"><button class="btn sm" data-act="d-sample" data-kind="xlsx">Tải file mẫu Excel</button><button class="btn sm" data-act="d-sample" data-kind="csv">Tải file mẫu CSV</button><button class="btn sm" data-act="d-sample" data-kind="txt">Tải file mẫu TXT</button></div></div></details>
+      <div class="row"><button class="btn sm" data-act="d-sample" data-kind="xlsx">Tải file mẫu Excel</button><button class="btn sm" data-act="d-sample" data-kind="csv">Tải file mẫu CSV</button><button class="btn sm" data-act="d-sample" data-kind="txt">Tải file mẫu TXT</button><button class="btn sm primary" data-act="d-sample" data-kind="try">Dùng thử bộ mẫu</button></div>
+      <p class="muted" style="margin:0;font-size:13px">“Dùng thử bộ mẫu” đưa luôn các từ mẫu vào danh sách bên dưới để bạn xem máy đọc file thế nào, không cần tải file.</p></div></details>
     `:`
     <form id="d-form" class="hero" autocomplete="off"><div class="fgrid">
       <label class="fld"><span>Từ / cụm từ tiếng Anh *</span><input name="en" required spellcheck="false" autocapitalize="off" placeholder="negotiate"></label>
@@ -1805,7 +1811,8 @@ async function myImport(f){
 function sampleXlsx(){
   loadLib("lib/xlsx.full.min.js","XLSX").then(X=>{
     const ws=X.utils.aoa_to_sheet(parseCSV(SAMPLE_CSV));ws["!cols"]=[{wch:16},{wch:10},{wch:16},{wch:24},{wch:44},{wch:44},{wch:22}];
-    const wb=X.utils.book_new();X.utils.book_append_sheet(wb,ws,"Tu vung");X.writeFile(wb,"mau-bo-hoc.xlsx");
+    const wb=X.utils.book_new();X.utils.book_append_sheet(wb,ws,"Tu vung");
+    downloadFile("mau-bo-hoc.xlsx",X.write(wb,{type:"array",bookType:"xlsx"}),"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
   }).catch(e=>toast(e.message));
 }
 
@@ -1889,7 +1896,8 @@ function myAct(d,b){
     case "d-enrich":if(!draft.busy)draftEnrich();break;
     case "d-save":draftSave();break;
     case "d-cancel":{const back=draft&&(draft.editId||draft.extendId),par=draft&&draft.parent;draft=null;back?go("topic",{topic:back}):goContainer(par||"mysets");break}
-    case "d-sample":if(d.kind==="xlsx")sampleXlsx();else if(d.kind==="csv")downloadFile("mau-bo-hoc.csv",SAMPLE_CSV,"text/csv;charset=utf-8");else downloadFile("mau-bo-hoc.txt",SAMPLE_TXT,"text/plain;charset=utf-8");break;
+    case "d-sample":if(d.kind==="try"){const rows=parseTable(parseCSV(SAMPLE_CSV.replace(/^\uFEFF/,"")));const {added}=mergeRows(draft.rows,rows);if(!draft.name)draft.name="Bộ mẫu";renderCreate();dmsg("ok",`Đã đưa ${added} từ mẫu vào danh sách. Bạn có thể sửa, xóa hoặc thêm từ của mình.`);break}
+      if(d.kind==="xlsx")sampleXlsx();else if(d.kind==="csv")downloadFile("mau-bo-hoc.csv",SAMPLE_CSV,"text/csv;charset=utf-8");else downloadFile("mau-bo-hoc.txt",SAMPLE_TXT,"text/plain;charset=utf-8");break;
   }
 }
 window.__toeicKey=(e=>{
