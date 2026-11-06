@@ -791,16 +791,23 @@ let slow=false;
 /* Phát âm: chỉ 1 giọng đọc tại một thời điểm, không phát trùng */
 let VOICE=null,speakTimer=null,lastSay={t:"",at:0},curUtter=null;
 function engVoices(){try{return speechSynthesis.getVoices().filter(v=>/^en/i.test(v.lang))}catch(e){return []}}
+/* Ưu tiên giọng nữ nhẹ nhàng, rõ chữ, chất lượng cao (giọng Natural/Neural/Premium), giọng Anh-Anh trước */
+const SOFT_VOICES=["Sonia","Libby","Maisie","Google UK English Female","Serena","Kate","Stephanie","Martha","Hazel","Susan","Emma","Ava","Jenny","Aria","Samantha","Allison","Karen","Moira","Google US English"];
+function vScore(v){const n=v.name;{let sc=0;const i=SOFT_VOICES.findIndex(k=>n.includes(k));if(i>=0)sc+=100-i*3;
+    if(/Natural|Neural|Premium|Enhanced|Online/i.test(n))sc+=40;if(/en[-_]GB/i.test(v.lang))sc+=25;else if(/en[-_](US|AU|IE)/i.test(v.lang))sc+=10;
+    if(/\bMale\b|Daniel|George|Ryan|Thomas|Guy|Fred|Albert|Bad News|Bells|Boing|Bubbles|Cellos|Jester|Organ|Trinoids|Whisper|Zarvox|Grandpa|Grandma|Rocko|Eddy|Reed|Sandy|Shelley/i.test(n))sc-=80;
+    return sc}}
+function bestVoice(vs){return vs.slice().sort((a,b)=>vScore(b)-vScore(a))[0]||null}
 function pickVoice(){
   try{
     const vs=engVoices();if(!vs.length)return;
     const want=store.voice&&vs.find(v=>v.name===store.voice);
     const gb=vs.filter(v=>/en[-_]GB/i.test(v.lang));
-    VOICE=want||gb.find(v=>v.localService)||gb[0]||vs.find(v=>v.localService)||vs[0]||null;
+    VOICE=want||bestVoice(vs)||gb[0]||vs[0]||null;
     const sel=document.getElementById("voicesel");
     if(sel){
-      const sorted=[...gb,...vs.filter(v=>!gb.includes(v))];
-      sel.innerHTML='<option value="">Tự động</option>'+sorted.map(v=>`<option value="${esc(v.name)}"${store.voice===v.name?" selected":""}>${esc(v.name.replace(/^Microsoft |Google /,"").replace(/ Online \(Natural\)/," (Natural)"))} · ${esc(v.lang)}${v.localService?"":" · mạng"}</option>`).join("");
+      const sorted=vs.slice().sort((a,b)=>vScore(b)-vScore(a)),auto=bestVoice(vs);
+      sel.innerHTML=`<option value="">Tự động${auto?" · "+esc(auto.name.replace(/^Microsoft |Google /,"").replace(/ Online \(Natural\)/,"")):""}</option>`+sorted.map(v=>`<option value="${esc(v.name)}"${store.voice===v.name?" selected":""}>${esc(v.name.replace(/^Microsoft |Google /,"").replace(/ Online \(Natural\)/," (Natural)"))} · ${esc(v.lang)}${v.localService?"":" · mạng"}</option>`).join("");
     }
   }catch(e){}
 }
@@ -820,7 +827,9 @@ function speak(text){
     speakTimer=setTimeout(()=>{
       const u=new SpeechSynthesisUtterance(t);
       if(VOICE)u.voice=VOICE;
-      u.lang=VOICE?VOICE.lang:"en-GB";u.rate=slow?0.6:0.92;
+      u.lang=VOICE?VOICE.lang:"en-GB";
+      /* Đọc chậm rãi, nhẹ nhàng: từ đơn chậm hơn một chút để nghe rõ âm */
+      const short=t.split(/\s+/).length<=3;u.rate=slow?0.62:(short?0.8:0.86);u.pitch=1.05;u.volume=1;
       curUtter=u;               /* giữ tham chiếu để trình duyệt không phát lại */
       ss.speak(u);
     },busy?150:20);
@@ -2436,12 +2445,13 @@ function renderGPrac(){
   if(it.type!=="translate")gAnnotate(document.querySelector(".gq"));
   const a=$("#g-ans");if(a){a.focus();if(it.type==="fix")a.setSelectionRange(a.value.length,a.value.length)}
 }
+let gLastPick=0;
 function gOrderRender(){
   const it=gs.items[gs.i],w=$("#g-order");if(!w)return;
   const used=new Set(it.picked);
   w.innerHTML=`<div class="slots ${it.done?(it.done==="ok"?"right":"wrong"):""}">${it.picked.map((k,j)=>`<button class="chip" data-act="g-unpick" data-k="${j}" ${it.done?"disabled":""}>${esc(it.tokens[k])}</button>`).join("")||`<span class="muted" style="font-size:13px">Bấm từ bên dưới để xếp câu…</span>`}</div>
   <div class="chips">${it.tokens.map((t,k)=>used.has(k)?"":`<button class="chip" data-act="g-pick" data-k="${k}" ${it.done?"disabled":""}>${esc(t)}</button>`).join("")}</div>
-  ${it.done?"":`<div class="row"><button class="btn primary" data-act="g-check" ${it.picked.length===it.tokens.length?"":"disabled"}>Kiểm tra</button><button class="btn" data-act="g-oclear">Xếp lại</button><button class="btn" data-act="g-skip">Xem đáp án</button></div>`}`;
+  ${it.done?"":`<div class="row"><button class="btn primary" data-act="g-check" ${it.picked.length===it.tokens.length?"":"disabled"}>Kiểm tra</button><button class="btn" data-act="g-oclear">Xếp lại</button><span style="flex:1"></span><button class="btn sm" data-act="g-skip">Bỏ qua, xem đáp án</button></div>`}`;
 }
 function gFbHTML(kind,head,inner){
   return `<div class="gfb ${kind}"><div class="gfb-h">${head}</div>${inner}</div>
@@ -2468,7 +2478,9 @@ async function gCheck(skip){
   if(it.type==="order"){
     const user=it.picked.map(k=>it.tokens[k]).join(" ");
     if(!skip&&it.picked.length<it.tokens.length)return;
-    const ok=!skip&&(gSame(user,it.answer)||gSame(user,gTokens(it.answer).join(" ")));it.done=ok?"ok":"no";gRecord(ok,user);gOrderRender();
+    const full=it.picked.length===it.tokens.length;
+    const ok=full&&(gSame(user,it.answer)||gSame(user,gTokens(it.answer).join(" ")));
+    if(ok)skip=false;it.done=ok?"ok":"no";gRecord(ok,user);gOrderRender();
     gShowFb(gFbHTML(ok?"ok":"no",ok?"✓ Chính xác!":skip?"Đáp án:":"✗ Chưa đúng thứ tự. Câu đúng là:",`${gAns(it.answer)}${it.vi?`<p class="muted">${esc(it.vi)}</p>`:""}${it.explain?`<p>${esc(it.explain)}</p>`:""}`));speak(it.answer);return;
   }
   const inp=$("#g-ans");const user=inp?inp.value.trim():"";
@@ -2589,13 +2601,15 @@ function gAct(d,b){
     case "g-back":gs=null;gBack();break;
     case "g-opt":gOpt(+d.k);break;
     case "g-check":gCheck(false);break;
-    case "g-skip":gCheck(true);break;
+    case "g-skip":if(Date.now()-gLastPick<700)break;gCheck(true);break;
     case "g-hint":{const h=$("#g-hint");if(h)h.hidden=false;b.remove();break}
     case "g-next":gNext();break;
     case "g-redo":{const it=gs.items[gs.i];gs.results[gs.i]=undefined;gs.answered=false;gs.grading=false;renderGPrac();break}
     case "g-regrade":{const inp=$("#g-ans");if(inp){inp.readOnly=false;gs.answered=false;gCheck(false)}break}
     case "g-self":{if(gs.answered)break;const ok=d.v==="1";const inp=$("#g-ans");if(inp)inp.classList.add(ok?"right":"wrong");gRecord(ok,inp?inp.value:"");gNext();break}
-    case "g-pick":{const it=gs.items[gs.i];if(it.done)break;it.picked.push(+d.k);gOrderRender();break}
+    case "g-pick":{const it=gs.items[gs.i];if(it.done||it.picked.includes(+d.k))break;it.picked.push(+d.k);gLastPick=Date.now();gOrderRender();
+      /* Xếp đủ từ thì tự kiểm tra luôn, không cần bấm nút */
+      if(it.picked.length===it.tokens.length){const g=gs,idx=gs.i;setTimeout(()=>{if(gs===g&&g.i===idx&&!g.answered&&!it.done&&it.picked.length===it.tokens.length)gCheck(false)},350)}break}
     case "g-unpick":{const it=gs.items[gs.i];if(it.done)break;it.picked.splice(+d.k,1);gOrderRender();break}
     case "g-oclear":{const it=gs.items[gs.i];it.picked=[];gOrderRender();break}
   }
