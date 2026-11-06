@@ -2434,12 +2434,12 @@ function renderGPrac(){
     <div class="opts">${it.options.map((o,k)=>`<button class="opt" data-act="g-opt" data-k="${k}"><span class="k">${k+1}</span><span>${esc(o)}</span></button>`).join("")}</div>`;
   else if(it.type==="fill"||it.type==="fix")body=`<div class="q gq"><span class="label">${G_TYPE[it.type]}</span><div class="big gblk">${esc(it.q)}</div>${it.type==="fix"?`<span class="muted" style="font-size:13px">Gõ lại cả câu sau khi đã sửa lỗi</span>`:""}</div>
     <form id="g-form" autocomplete="off"><input class="inp" id="g-ans" placeholder="${it.type==="fill"?"Từ cần điền":"Câu đã sửa đúng"}" autocapitalize="off" spellcheck="false" ${it.type==="fix"?`value="${esc(it.q)}"`:""}></form>
-    <div class="row"><button class="btn primary" data-act="g-check">Kiểm tra</button><button class="btn" data-act="g-skip">Xem đáp án</button></div>`;
+    <div class="row"><button class="btn primary" data-act="g-check">Kiểm tra</button><button class="btn" data-act="g-skip">Bỏ qua, xem đáp án</button></div>`;
   else if(it.type==="order"){if(!it.tokens){it.answer=gTxt(it.answer);const t=gTokens(it.answer);let sh=shuffle(t.map((w,k)=>({w,k})));if(t.length>1&&sh.every((x,k)=>x.k===k))sh=sh.reverse();it.tokens=sh.map(x=>x.w)}it.picked=it.picked||[];
     body=`<div class="q"><span class="label">${G_TYPE.order}</span>${it.vi?`<div class="big" style="font-size:18px">${esc(it.vi)}</div>`:`<span class="muted">Bấm các từ theo đúng thứ tự (câu có trong bài lý thuyết)</span><button class="btn sm" data-say="${esc(it.answer)}">${SPK} Nghe câu để gợi ý</button>`}</div><div id="g-order"></div>`;}
   else if(it.type==="translate")body=`<div class="q"><span class="label">${G_TYPE.translate}</span><div class="big">${esc(it.vi)}</div>${it.hint?`<button class="btn sm" data-act="g-hint">Gợi ý</button><span class="muted" id="g-hint" hidden style="font-size:14px">${esc(it.hint)}</span>`:""}</div>
     <form id="g-form" autocomplete="off"><textarea class="inp" id="g-ans" rows="3" placeholder="Gõ câu tiếng Anh của bạn…" autocapitalize="sentences" spellcheck="false"></textarea></form>
-    <div class="row"><button class="btn primary" data-act="g-check">Kiểm tra</button><button class="btn" data-act="g-skip">Xem đáp án</button><span class="kbd">Ctrl + Enter để kiểm tra</span></div>`;
+    <div class="row"><button class="btn primary" data-act="g-check">Kiểm tra</button><button class="btn" data-act="g-skip">Bỏ qua, xem đáp án</button><span class="kbd">Ctrl + Enter để kiểm tra</span></div>`;
   app.innerHTML=`<div class="stage">${gHead()}${body}<div id="g-fb"></div></div>`;
   if(it.type==="order")gOrderRender();
   if(it.type!=="translate")gAnnotate(document.querySelector(".gq"));
@@ -2484,6 +2484,8 @@ async function gCheck(skip){
     gShowFb(gFbHTML(ok?"ok":"no",ok?"✓ Chính xác!":skip?"Đáp án:":"✗ Chưa đúng thứ tự. Câu đúng là:",`${gAns(it.answer)}${it.vi?`<p class="muted">${esc(it.vi)}</p>`:""}${it.explain?`<p>${esc(it.explain)}</p>`:""}`));speak(it.answer);return;
   }
   const inp=$("#g-ans");const user=inp?inp.value.trim():"";
+  /* Đã gõ bài mà bấm “Xem đáp án” thì vẫn chấm bài trước, rồi hiện đáp án */
+  if(skip&&user&&!(it.type==="fix"&&gSame(user,it.q)))skip=false;
   if(!skip&&!user){inp&&inp.focus();return}
   if(it.type==="fill"){
     const ok=!skip&&[it.answer,...(it.accept||[])].some(a=>gSame(user,a));
@@ -2495,6 +2497,8 @@ async function gCheck(skip){
     if(inp){inp.readOnly=true;inp.classList.add("wrong")}gRecord(false,user);
     gShowFb(gFbHTML("no","Đáp án",`${gAns(it.answer)}${it.hint?`<p class="muted">Gợi ý: ${esc(it.hint)}</p>`:""}${it.explain?`<p>${esc(it.explain)}</p>`:""}`));speak(it.answer);return;
   }
+  if(it.type==="translate"&&gSame(user,it.answer)){inp.readOnly=true;inp.classList.add("right");gRecord(true,user);
+    gShowFb(gFbHTML("ok","✓ Chính xác!",`${gAns(it.answer)}${it.explain?`<p>${esc(it.explain)}</p>`:""}`));speak(it.answer);return}
   if(it.type==="fix"&&gSame(user,it.answer)){inp.readOnly=true;inp.classList.add("right");gRecord(true,user);
     gShowFb(gFbHTML("ok","✓ Chính xác!",`${gAns(it.answer)}${it.wrong?`<p>Lỗi sai: <s>${esc(it.wrong)}</s></p>`:""}${it.explain?`<p>${esc(it.explain)}</p>`:""}`));speak(it.answer);return}
   /* Câu dịch, hoặc câu sửa lỗi viết khác đáp án: nhờ AI chấm */
