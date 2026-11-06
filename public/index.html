@@ -317,6 +317,10 @@ textarea.inp{resize:vertical;line-height:1.5}
 .spin.sm{width:18px;height:18px;border-width:2px;flex:none}
 @keyframes spin{to{transform:rotate(360deg)}}
 .ai-box h3{font-size:16px}
+.ai-rows{display:flex;flex-direction:column;gap:10px}
+.ai-row{border:1px solid var(--line);border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;gap:6px;background:var(--bg)}
+.ai-h{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.ai-h b{color:var(--fg)}
 #g-order{display:flex;flex-direction:column;gap:12px}
 </style>
 
@@ -2134,51 +2138,137 @@ Trả về DUY NHẤT JSON: {"vi":"${g.word?"nghĩa tiếng Việt của từ tr
   gPopRender();
 }
 
-/* ---------- Kết nối AI: Claude (trong ứng dụng Claude) hoặc khóa API riêng (trang web riêng) ---------- */
-const AI_LS="toeic-ai-key",AI_MODEL="claude-sonnet-5-5";
-let AI_S,AI_BLOCK=false;
+/* ---------- Kết nối AI ----------
+   Trong ứng dụng Claude: dùng Claude của người dùng.
+   Trên trang web riêng: dùng lần lượt các AI người dùng đã dán khóa (mặc định Gemini → DeepSeek → Claude API).
+   AI nào hết lượt miễn phí / hết tiền / quá tải thì tự chuyển sang AI kế tiếp, tạm nghỉ AI đó đến khi hạn mức làm mới. */
+const AI_LS="toeic-ai-key",AI_MODEL="claude-sonnet-5-5",AI_COOL_LS="toeic-ai-cool";
+const AI_PROVS=[
+ {id:"gemini",name:"Gemini",ls:"toeic-ai-gemini",free:"Miễn phí (có giới hạn mỗi phút, mỗi ngày)",get:"aistudio.google.com/apikey",ph:"AIza…",re:/^AIza[\w-]{20,}$/},
+ {id:"deepseek",name:"DeepSeek",ls:"toeic-ai-deepseek",free:"Trả trước, rất rẻ (không có gói miễn phí lâu dài)",get:"platform.deepseek.com/api_keys",ph:"sk-…",re:/^sk-[\w-]{16,}$/},
+ {id:"anthropic",name:"Claude (khóa API)",ls:AI_LS,free:"Trả theo lượt dùng",get:"console.anthropic.com",ph:"sk-ant-…",re:/^sk-ant-[\w-]{16,}$/}
+];
+let AI_S,AI_BLOCK=false,AI_LAST=null;
 function aiSampleP(){if(AI_S===undefined)AI_S=(window.claude&&typeof window.claude.use==="function")?window.claude.use("sample").catch(()=>null):Promise.resolve(null);return AI_S}
-function aiKey(){try{return localStorage.getItem(AI_LS)||""}catch(e){return ""}}
-async function aiMode(){const s=await aiSampleP();if(s&&!AI_BLOCK)return "claude";return aiKey()?"key":null}
-function aiErrText(e){const c=e&&e.code;return ({not_granted:"Bạn chưa cho phép trang này dùng Claude. Tải lại trang rồi bấm Cho phép khi được hỏi.",rate_limited:"Claude đang bận vì gọi nhiều quá, đợi một lát rồi thử lại.",invalid_json:"AI trả lời chưa đúng định dạng. Bấm Thử lại.",empty_completion:"AI chưa trả lời được. Bấm Thử lại.",no_ai:"Chưa kết nối AI.",cancelled:"Đã dừng.",bad_key:"Khóa API không đúng hoặc tài khoản API đã hết tiền.",network:"Không kết nối được tới máy chủ AI. Kiểm tra mạng rồi thử lại.",sampling_disabled:"Tính năng hỏi Claude đang tắt cho tài khoản này.",session_expired:"Phiên đăng nhập Claude đã hết hạn, hãy tải lại trang.",prompt_too_large:"Bài lý thuyết quá dài. Hãy tách thành nhiều bài nhỏ hơn."}[c])||"AI gặp lỗi, thử lại sau ít phút.";}
+function provKey(p){try{return localStorage.getItem(p.ls)||""}catch(e){return ""}}
+function aiKeys(){return AI_PROVS.filter(p=>provKey(p))}
+function aiKey(){return aiKeys().length?"1":""}
+function aiCool(){try{return JSON.parse(localStorage.getItem(AI_COOL_LS))||{}}catch(e){return {}}}
+function aiSetCool(id,ms){const c=aiCool();c[id]=Date.now()+ms;try{localStorage.setItem(AI_COOL_LS,JSON.stringify(c))}catch(e){}}
+function aiCoolLeft(id){return Math.max(0,(aiCool()[id]||0)-Date.now())}
+/* Hạn mức ngày của Gemini làm mới lúc 0h giờ Thái Bình Dương ≈ 15h giờ Việt Nam */
+function msToGeminiReset(){const n=new Date(),t=new Date(n);t.setUTCHours(8,5,0,0);if(t<=n)t.setUTCDate(t.getUTCDate()+1);return t-n}
+async function aiMode(){const s=await aiSampleP();if(s&&!AI_BLOCK)return "claude";return aiKeys().length?"key":null}
+function aiErrText(e){const c=e&&e.code;return ({not_granted:"Bạn chưa cho phép trang này dùng Claude. Tải lại trang rồi bấm Cho phép khi được hỏi.",rate_limited:"AI đang bận vì gọi nhiều quá, đợi một lát rồi thử lại.",invalid_json:"AI trả lời chưa đúng định dạng. Bấm Thử lại.",empty_completion:"AI chưa trả lời được. Bấm Thử lại.",no_ai:"Chưa kết nối AI.",cancelled:"Đã dừng.",bad_key:"Khóa API"+(e&&e.prov?" "+e.prov:"")+" không đúng. Kiểm tra lại ở mục Trợ lý AI (trang Grammar).",network:"Không kết nối được tới máy chủ AI. Kiểm tra mạng rồi thử lại.",sampling_disabled:"Tính năng hỏi Claude đang tắt cho tài khoản này.",session_expired:"Phiên đăng nhập Claude đã hết hạn, hãy tải lại trang.",prompt_too_large:"Bài lý thuyết quá dài. Hãy tách thành nhiều bài nhỏ hơn.",all_exhausted:"Đã hết lượt dùng AI miễn phí cho lúc này. "+aiResetText()}[c])||"AI gặp lỗi, thử lại sau ít phút.";}
+function aiResetText(){const ws=aiKeys().map(p=>aiCoolLeft(p.id)).filter(x=>x>0);if(!ws.length)return "Thử lại sau ít phút.";const m=Math.min(...ws);
+  const at=new Date(Date.now()+m);return m<120000?"Thử lại sau khoảng 1 phút.":`Dùng lại được từ khoảng ${String(at.getHours()).padStart(2,"0")}:${String(at.getMinutes()).padStart(2,"0")}${m>20*3600e3?" ngày mai":""}.`}
 function parseLooseJSON(t){
-  try{return JSON.parse(t)}catch(e){}
+  t=String(t||"");try{return JSON.parse(t)}catch(e){}
   const f=t.match(/```(?:json)?\s*([\s\S]*?)```/);if(f){try{return JSON.parse(f[1])}catch(e){}}
   const a=t.search(/[\[{]/),b=Math.max(t.lastIndexOf("}"),t.lastIndexOf("]"));
   if(a>=0&&b>a){try{return JSON.parse(t.slice(a,b+1))}catch(e){}}
   throw {code:"invalid_json"};
 }
+const AI_TAIL="\n\nChỉ trả lời bằng một JSON hợp lệ (json), không thêm chữ nào khác, không dùng ```.";
+async function aiFetch(url,init){try{return await fetch(url,init)}catch(e){throw {code:e&&e.name==="AbortError"?"cancelled":"network"}}}
+async function aiBody(r){try{return await r.json()}catch(e){return {}}}
+/* Mỗi hàm trả về JSON đã đọc, hoặc ném {code:"quota",wait} khi hết lượt, {code:"bad_key"}, {code:"upstream_error"}… */
+const GEM_MODELS=["gemini-flash-latest","gemini-2.5-flash","gemini-flash-lite-latest","gemini-2.5-flash-lite"];
+const AI_CALL={
+  async gemini(key,prompt,o){
+    let last={code:"upstream_error"};
+    for(const model of GEM_MODELS){
+      if(aiCoolLeft("gemini:"+model))continue;           /* mỗi model có hạn mức miễn phí riêng */
+      const r=await aiFetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(key)}`,{method:"POST",signal:o.signal,headers:{"content-type":"application/json"},
+        body:JSON.stringify({contents:[{role:"user",parts:[{text:prompt+AI_TAIL}]}],generationConfig:{responseMimeType:"application/json",temperature:0.7,maxOutputTokens:16384}})});
+      const j=await aiBody(r),js=JSON.stringify(j);
+      if(r.status===404){last={code:"upstream_error"};continue}
+      if(r.status===429){
+        const d=js.match(/"retryDelay"\s*:\s*"(\d+(?:\.\d+)?)s"/);const perDay=/PerDay|per day|daily/i.test(js);
+        aiSetCool("gemini:"+model,perDay||!d?msToGeminiReset():Math.max(+d[1]*1000,15000));last={code:"quota"};continue;
+      }
+      if(r.status===400&&/API_KEY_INVALID|API key not valid/i.test(js)||r.status===401||r.status===403)throw {code:"bad_key"};
+      if(r.status>=500){last={code:"upstream_error"};continue}
+      if(!r.ok)throw {code:"upstream_error"};
+      const parts=((((j.candidates||[])[0]||{}).content||{}).parts)||[];const text=parts.filter(p=>!p.thought).map(p=>p.text||"").join("");
+      if(!text){last={code:"empty_completion"};continue}
+      return parseLooseJSON(text);
+    }
+    const left=GEM_MODELS.map(m=>aiCoolLeft("gemini:"+m));
+    if(left.every(x=>x>0))throw {code:"quota",wait:Math.min(...left)};
+    throw last;
+  },
+  async deepseek(key,prompt,o){
+    let last={code:"upstream_error"};
+    for(const model of ["deepseek-chat","deepseek-v4-flash"]){
+      const r=await aiFetch("https://api.deepseek.com/chat/completions",{method:"POST",signal:o.signal,headers:{"content-type":"application/json","authorization":"Bearer "+key},
+        body:JSON.stringify({model,messages:[{role:"user",content:prompt+AI_TAIL}],response_format:{type:"json_object"},temperature:0.7,max_tokens:8000})});
+      const j=await aiBody(r),js=JSON.stringify(j);
+      if(r.status===402)throw {code:"quota",wait:12*3600e3};          /* hết tiền trong tài khoản */
+      if(r.status===429)throw {code:"quota",wait:60000};
+      if(r.status===401||r.status===403)throw {code:"bad_key"};
+      if(r.status===400&&/model/i.test(js)){last={code:"upstream_error"};continue}
+      if(r.status>=500)throw {code:"upstream_error"};
+      if(!r.ok)throw {code:"upstream_error"};
+      const text=(((j.choices||[])[0]||{}).message||{}).content||"";
+      if(!text)throw {code:"empty_completion"};
+      return parseLooseJSON(text);
+    }
+    throw last;
+  },
+  async anthropic(key,prompt,o){
+    const r=await aiFetch("https://api.anthropic.com/v1/messages",{method:"POST",signal:o.signal,headers:{"content-type":"application/json","x-api-key":key,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},
+      body:JSON.stringify({model:AI_MODEL,max_tokens:o.max||6000,messages:[{role:"user",content:prompt+AI_TAIL}]})});
+    const j=await aiBody(r),js=JSON.stringify(j);
+    if(r.status===401||r.status===403)throw {code:"bad_key"};
+    if(r.status===429)throw {code:"quota",wait:60000};
+    if(r.status===400&&/credit|balance|billing/i.test(js))throw {code:"quota",wait:12*3600e3};
+    if(!r.ok)throw {code:"upstream_error"};
+    return parseLooseJSON((j.content||[]).filter(c=>c.type==="text").map(c=>c.text).join(""));
+  }
+};
 async function aiJSON(prompt,opts){
   opts=opts||{};
   const s=await aiSampleP();
   if(s&&!AI_BLOCK){
-    try{return await s.json(prompt,{modelTier:opts.tier||"default",signal:opts.signal,cache:opts.cache!==false})}
-    catch(e){if(e&&e.code==="not_granted"&&aiKey())AI_BLOCK=true;else throw e}
+    try{const r=await s.json(prompt,{modelTier:opts.tier||"default",signal:opts.signal,cache:opts.cache!==false});AI_LAST="claude";return r}
+    catch(e){const c=e&&e.code;
+      if(!aiKeys().length||!["not_granted","rate_limited","sampling_disabled","session_expired","queue_overflow","upstream_error"].includes(c))throw e;
+      if(c==="not_granted"||c==="sampling_disabled")AI_BLOCK=true;}
   }
-  const k=aiKey();if(!k)throw {code:"no_ai"};
-  let r;
-  try{r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",signal:opts.signal,headers:{"content-type":"application/json","x-api-key":k,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},
-    body:JSON.stringify({model:AI_MODEL,max_tokens:opts.max||6000,messages:[{role:"user",content:prompt+"\n\nChỉ trả lời bằng JSON hợp lệ, không thêm chữ nào khác."}]})})}
-  catch(e){throw {code:e&&e.name==="AbortError"?"cancelled":"network"}}
-  if(r.status===401||r.status===403)throw {code:"bad_key"};
-  if(r.status===429||r.status===529)throw {code:"rate_limited"};
-  if(r.status===400){let j={};try{j=await r.json()}catch(e){}if(/credit|balance|billing/i.test(JSON.stringify(j)))throw {code:"bad_key"};throw {code:"upstream_error"}}
-  if(!r.ok)throw {code:"upstream_error"};
-  const j=await r.json();
-  return parseLooseJSON((j.content||[]).filter(c=>c.type==="text").map(c=>c.text).join(""));
+  const list=aiKeys();if(!list.length)throw {code:"no_ai"};
+  let lastErr=null,quotaN=0,badKey=null;
+  for(const p of list){
+    if(aiCoolLeft(p.id)){quotaN++;continue}
+    try{const r=await AI_CALL[p.id](provKey(p),prompt,opts);AI_LAST=p.id;return r}
+    catch(e){
+      if(e&&e.code==="cancelled")throw e;
+      if(e&&e.code==="quota"){aiSetCool(p.id,e.wait||60000);quotaN++;continue}     /* hết lượt: lặng lẽ chuyển AI khác */
+      if(e&&e.code==="bad_key"){badKey={code:"bad_key",prov:p.name};continue}
+      lastErr=e;                                                                     /* lỗi tạm thời: thử AI khác */
+    }
+  }
+  if(quotaN===list.length)throw {code:"all_exhausted"};
+  throw lastErr||badKey||{code:"all_exhausted"};
 }
 function aiBoxHTML(){
   return `<div class="hero ai-box" id="ai-box"><div class="row" style="justify-content:space-between"><h3>Trợ lý AI soạn và chấm bài</h3><span class="pill grey" id="ai-st">đang kiểm tra…</span></div><div id="ai-body" class="muted" style="font-size:14px"></div></div>`;
 }
 async function aiBoxFill(){
   const st=$("#ai-st"),bd=$("#ai-body");if(!st||!bd)return;
-  const s=await aiSampleP();const k=aiKey();
+  const s=await aiSampleP();
   if(!$("#ai-st"))return;
-  if(s&&!AI_BLOCK){st.className="pill";st.textContent="Đã sẵn sàng";bd.innerHTML=`Đang mở trong ứng dụng Claude nên trang dùng được Claude để <b>đọc lý thuyết, tự soạn bài tập, chấm câu dịch và giải thích</b>. Lần đầu dùng, Claude sẽ hỏi bạn cho phép. Lượt dùng tính vào gói Claude của bạn.`;return}
-  st.className=k?"pill":"pill grey";st.textContent=k?"Đang dùng khóa API của bạn":"Chưa kết nối";
-  bd.innerHTML=`<p style="margin:0 0 8px">${k?"Trang đang dùng khóa API Anthropic bạn đã lưu để soạn và chấm bài.":"Trên trang web riêng (tên miền của bạn), trang không tự gọi được Claude. Muốn có bài tập tự sinh và chấm câu dịch ở đây, hãy dán <b>khóa API Anthropic</b> của bạn (tạo ở console.anthropic.com, trả phí theo lượt dùng, mỗi bài tập chỉ tốn khoảng vài trăm đồng)."} Khóa chỉ lưu trên trình duyệt máy này và gửi thẳng tới Anthropic. Mở trang trong ứng dụng Claude thì không cần khóa.</p>
-  <form id="ai-form" class="row" autocomplete="off"><input class="inp" id="ai-key" type="password" placeholder="${k?"•••••••• (đã lưu)":"sk-ant-…"}" style="flex:1;min-width:200px;font-size:15px;padding:9px 12px"><button class="btn primary" type="submit">Lưu khóa</button>${k?`<button class="btn danger" type="button" data-act="g-ai-del">Xóa khóa</button>`:""}</form>
-  <p style="margin:8px 0 0">Không có AI thì vẫn dùng được: đọc lý thuyết, bấm từ/câu để nghe và xem nghĩa, <b>bài tập cơ bản</b> và <b>ôn trắc nghiệm các câu đã làm</b>.</p>`;
+  const inClaude=s&&!AI_BLOCK,keys=aiKeys();
+  st.className=inClaude||keys.length?"pill":"pill grey";
+  st.textContent=inClaude?"Đang dùng Claude":keys.length?"Đã kết nối "+keys.map(p=>p.name.replace(/ \(.*/,"")).join(" + "):"Chưa kết nối";
+  const rows=AI_PROVS.map((p,i)=>{const k=provKey(p),cool=k&&aiCoolLeft(p.id);
+    return `<form class="ai-row" data-prov="${p.id}" autocomplete="off">
+      <div class="ai-h"><b>${i+1}. ${esc(p.name)}</b>${k?`<span class="pill ${cool?"bad":""}">${cool?"tạm hết lượt":"đã lưu khóa"}</span>`:""}<span class="muted" style="font-size:12.5px">${esc(p.free)}</span></div>
+      <div class="row"><input class="inp" type="password" name="key" placeholder="${k?"•••••••• (đã lưu, dán khóa mới để thay)":esc(p.ph)}" style="flex:1;min-width:180px;font-size:15px;padding:8px 12px"><button class="btn sm primary" type="submit">Lưu</button>${k?`<button class="btn sm danger" type="button" data-act="g-ai-del" data-prov="${p.id}">Xóa</button>`:""}</div>
+      <span class="muted" style="font-size:12.5px">Lấy khóa ở <b>${esc(p.get)}</b></span></form>`}).join("");
+  bd.innerHTML=`<p style="margin:0 0 10px">${inClaude?"Đang mở trong ứng dụng Claude nên trang dùng Claude để <b>đọc lý thuyết, soạn bài tập, chấm câu dịch</b>. Các khóa bên dưới chỉ dùng khi Claude bận hoặc khi mở trang trên tên miền riêng.":"Trên tên miền riêng, trang dùng các AI bạn dán khóa bên dưới. Trang <b>ưu tiên AI số 1</b>; AI nào hết lượt miễn phí hoặc hết tiền thì <b>tự chuyển sang AI kế tiếp</b>, không cần bạn làm gì. Khi tất cả đều hết lượt, trang sẽ báo."}</p>
+  <div class="ai-rows">${rows}</div>
+  <p style="margin:10px 0 0;font-size:13px">Khóa chỉ lưu trên trình duyệt của máy này (người khác vào trang không thấy), và gửi thẳng tới hãng AI. Mỗi máy/trình duyệt cần dán khóa một lần. Không có AI thì vẫn dùng được: đọc lý thuyết, bấm nghe từ, <b>bài tập cơ bản</b> và <b>ôn các câu trắc nghiệm đã làm</b>.</p>`;
 }
 
 /* ---------- Trang: danh sách Grammar, bộ Grammar, bài lý thuyết ---------- */
@@ -2583,7 +2673,7 @@ function gAct(d,b){
     case "g-sent":gOpenSent(+d.s,false);break;
     case "g-sent-more":if(gPop)gOpenSent(GRUNS.indexOf(gPop.sent),true);break;
     case "g-ai-word":gAiWord();break;
-    case "g-ai-del":try{localStorage.removeItem(AI_LS)}catch(e){}AI_BLOCK=false;toast("Đã xóa khóa API.");aiBoxFill();break;
+    case "g-ai-del":{const p=AI_PROVS.find(x=>x.id===d.prov);if(p){try{localStorage.removeItem(p.ls)}catch(e){}toast("Đã xóa khóa "+p.name+".")}aiBoxFill();break}
     case "g-set-edit":gEditing=true;renderGSet();break;
     case "g-set-cancel":gEditing=false;renderGSet();break;
     case "g-set-del":{const s=gSetById(S.gset),n=gLessons(s.id).length;
@@ -2671,7 +2761,7 @@ window.__toeicChange=(e=>{if(e.target.id==="slowchk")slow=e.target.checked;
 window.__toeicSubmit=(e=>{if(e.target.id==="inpform"){e.preventDefault();inpCheck(false)}
   if(e.target.id==="d-form"){e.preventDefault();draftAddManual(e.target)}
   if(e.target.id==="g-form"){e.preventDefault();gCheck(false)}
-  if(e.target.id==="ai-form"){e.preventDefault();const v=$("#ai-key").value.trim();if(!v){toast("Hãy dán khóa API.");return}if(!/^sk-ant-/.test(v)){toast("Khóa API Anthropic thường bắt đầu bằng sk-ant-");return}try{localStorage.setItem(AI_LS,v)}catch(err){}AI_BLOCK=false;toast("Đã lưu khóa API trên máy này.");aiBoxFill()}
+  if(e.target.classList&&e.target.classList.contains("ai-row")){e.preventDefault();const p=AI_PROVS.find(x=>x.id===e.target.dataset.prov);const v=e.target.key.value.trim();if(!p)return;if(!v){toast("Hãy dán khóa API "+p.name+".");return}if(!p.re.test(v)){toast("Khóa "+p.name+" thường có dạng "+p.ph);return}try{localStorage.setItem(p.ls,v);const c=aiCool();Object.keys(c).forEach(k=>{if(k.split(":")[0]===p.id)delete c[k]});localStorage.setItem(AI_COOL_LS,JSON.stringify(c))}catch(err){}toast("Đã lưu khóa "+p.name+" trên máy này.");aiBoxFill()}
   if(e.target.id==="gset-form"){e.preventDefault();const v=$("#gset-name").value.trim();if(!v){toast("Hãy nhập tên bộ.");return}const st=gSetById(S.gset);st.name=v.slice(0,60);st.sub=$("#gset-sub").value.trim().slice(0,90);gSave();gEditing=false;render();toast("Đã lưu.")}
   if(e.target.id==="slot-form"){e.preventDefault();const v=$("#slot-name").value.trim();if(!v){toast("Hãy nhập tên mục.");return}mySlots.names[S.slot]=v;mySave();slotEditing=false;render();toast("Đã đổi tên mục.")}});
 /* Ô nhập của trang tạo bộ học: cập nhật bản nháp ngay khi gõ */
